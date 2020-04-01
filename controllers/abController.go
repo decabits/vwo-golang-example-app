@@ -19,6 +19,6 @@ func ABController(c *gin.Context) {
 	variationName := api.Activate(instance, config.GetString("abCampaignKey"), userID)
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "pong",
+		"message": variationName,
 	})
 }

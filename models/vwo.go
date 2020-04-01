@@ -14,7 +14,7 @@ type VWO struct {
 //Init ...
 func (v *VWO) Init() {
 	// config := config.GetConfig()
-	storage := UserStorageData{}
+	storage := &UserStorageData{}
 	// vwo := vwo.Default(config.GetString("accountID"), config.GetString("SDKKey"), storage)
 	VWO := vwo.New("./settings.json", storage)
 	v.vwoInstance = VWO

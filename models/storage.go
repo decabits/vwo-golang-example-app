@@ -15,29 +15,33 @@ type UserStorage interface {
 // UserStorageData struct
 type UserStorageData struct{}
 
-// var UsersData = map[string][]UserData{
-// 	"campaignKey" : [
-// 		{
-// 			UserID: "user-identifier",
-//       CampaignKey: "campaign unique key",
-//       VariationName: "Variation-2",
-// 		},
-// 		{
-// 			UserID: "user-identifier",
-//       CampaignKey: "campaign unique key",
-//       VariationName: "Variation-2",
-// 		}
-// 	]
-// }
+var UsersDatas = `{
+	"campaignKey": [
+		{
+			"UserID": "user-identifier",
+			"CampaignKey": "campaign unique key",
+			"VariationName": "Variation-2",
+		},
+		{
+			"UserID": "user-identifier",
+			"CampaignKey": "campaign unique key",
+			"VariationName": "Variation-2",
+		}
+	]
+}`
 
 // Get function
-func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
-	// for _, userData := range config.UserDatas {
+func (us *UserStorageData) Get(userID, campaignKey string) (schema.UserData, error) {
+	// var userDatas schema.UserDatas
+	// if err := json.Unmarshal([]byte(UsersDatas), &userDatas); err != nil {
+	// 	return schema.UserData{}, errors.New("Error: " + err.Error())
+	// }
+	// for _, userData := range userDatas {
 	// 	if userData.UserID == userID && userData.CampaignKey == campaignKey {
-	// 		return userData
+	// 		return userData, nil
 	// 	}
 	// }
-	return schema.UserData{}
+	return schema.UserData{}, nil
 }
 
 // Set function
