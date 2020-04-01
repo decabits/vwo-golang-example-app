@@ -3,8 +3,7 @@ SDKKey: "7aeed7f67f5a0b0fbe476c1f086a7038"
 abCampaignKey: "hhjjjj"
 abCampaignGoalIdentifier: "rev"
 pollTime: 10000
-server:
- - port: "3000"
+port: ":3000"
 userData: {
   "hhjjjj" : [
     {
