@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/Piyushhbhutoria/vwo-go-sdk/schema"
-	"github.com/decabits/vwo-golang-example-app/config"
+	//"github.com/decabits/vwo-golang-example-app/config"
 )
 
 // UserStorage interface
@@ -32,11 +32,11 @@ type UserStorageData struct{}
 
 // Get function
 func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
-	for _, userData := range config.UserDatas {
-		if userData.UserID == userID && userData.CampaignKey == campaignKey {
-			return userData
-		}
-	}
+	// for _, userData := range config.UserDatas {
+	// 	if userData.UserID == userID && userData.CampaignKey == campaignKey {
+	// 		return userData
+	// 	}
+	// }
 	return schema.UserData{}
 }
 

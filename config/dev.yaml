@@ -5,3 +5,18 @@ abCampaignGoalIdentifier: "rev"
 pollTime: 10000
 server:
  - port: "3000"
+userData: {
+  "hhjjjj" : [
+    {
+ 			  "UserID": "Chris",
+       "CampaignKey": "hhjjjj",
+       "VariationName": "Variation-1",
+ 		},
+ 		{
+ 			"UserID": "Bill",
+       "CampaignKey": "hhjjjj",
+       "VariationName": "Control",
+ 		}
+  ]
+}
+
