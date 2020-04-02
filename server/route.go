@@ -15,6 +15,7 @@ func NewRouter() *gin.Engine {
 	router.GET("/ab", controllers.ABController)
 	router.GET("/feature-rollout", controllers.FeatureRolloutController)
 	router.GET("/feature-test", controllers.FeatureTestController)
+	router.GET("/push", controllers.PushController)
 
 	return router
 }

@@ -14,13 +14,14 @@ import (
 func ABController(c *gin.Context) {
 	config := config.GetConfig()
 	userID := util.GetRandomUser()
+	campaignKey := config.GetString("abCampaignKey")
 
 	vwo := models.VWO{}
 	instance := vwo.GetVWOInstance()
 	options := schema.Options{}
 
-	variationName := api.ActivateWithOptions(instance, config.GetString("abCampaignKey"), userID, options)
-	// variationName := api.Activate(instance, config.GetString("abCampaignKey"), userID)
+	variationName := api.ActivateWithOptions(instance,campaignKey, userID, options)
+	// variationName := api.Activate(instance,campaignKey, userID)
 
 	c.JSON(http.StatusOK, gin.H{
 		"userID":    userID,
