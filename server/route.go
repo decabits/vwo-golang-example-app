@@ -16,6 +16,7 @@ func NewRouter() *gin.Engine {
 	router.GET("/feature-rollout", controllers.FeatureRolloutController)
 	router.GET("/feature-test", controllers.FeatureTestController)
 	router.GET("/push", controllers.PushController)
+	router.GET("/go-sdk", controllers.GoSDKController)
 
 	return router
 }

@@ -13,7 +13,7 @@ func PushController(c *gin.Context) {
 	userID := util.GetRandomUser()
 
 	tagKey := "hello2"
-  tagValue := "b"
+  	tagValue := "b"
 
 	vwo := models.VWO{}
 	instance := vwo.GetVWOInstance()
@@ -21,7 +21,7 @@ func PushController(c *gin.Context) {
 	result := api.Push(instance, tagKey, tagValue, userID)
 
 	c.JSON(http.StatusOK, gin.H{
-		"userID":    userID,
+		"userID": userID,
 		"result": result,
 	})
 }

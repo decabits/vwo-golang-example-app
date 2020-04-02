@@ -15,16 +15,24 @@ func ABController(c *gin.Context) {
 	config := config.GetConfig()
 	userID := util.GetRandomUser()
 	campaignKey := config.GetString("abCampaignKey")
+	abCampaigngoalIdentifier := config.GetString("abCampaignGoalIdentifier")
 
 	vwo := models.VWO{}
 	instance := vwo.GetVWOInstance()
 	options := schema.Options{}
 
-	variationName := api.ActivateWithOptions(instance,campaignKey, userID, options)
-	// variationName := api.Activate(instance,campaignKey, userID)
+	isPartOfCampaign := false
+	variationName := api.ActivateWithOptions(instance, campaignKey, userID, options)
+	if variationName != "" {
+		isPartOfCampaign = true
+	}
+
+	track := api.TrackWithOptions(instance, campaignKey, userID, abCampaigngoalIdentifier, options)
 
 	c.JSON(http.StatusOK, gin.H{
-		"userID":    userID,
-		"variation": variationName,
+		"userID":           userID,
+		"variation":        variationName,
+		"isPartOfCampaign": isPartOfCampaign,
+		"track":            track,
 	})
 }
