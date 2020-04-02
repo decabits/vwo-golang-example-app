@@ -9,14 +9,14 @@ port: ":3000"
 userData: {
   "hhjjjj" : [
     {
- 			  "UserID": "Chris",
-       "CampaignKey": "hhjjjj",
-       "VariationName": "Variation-1",
+ 		  "UserID": "Chris",
+      "CampaignKey": "hhjjjj",
+      "VariationName": "Variation-1",
  		},
  		{
  			"UserID": "Bill",
-       "CampaignKey": "hhjjjj",
-       "VariationName": "Control",
+      "CampaignKey": "hhjjjj",
+      "VariationName": "Control",
  		}
   ]
 }

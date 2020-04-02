@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/Piyushhbhutoria/vwo-go-sdk/schema"
+	"github.com/decabits/vwo-golang-sdk/schema"
 	//"github.com/decabits/vwo-golang-example-app/config"
 )
 
@@ -31,6 +31,11 @@ var UsersDatas = `{
 }`
 
 // Get function
+/*
+{
+	struct
+}
+*/
 func (us *UserStorageData) Get(userID, campaignKey string) (schema.UserData, error) {
 	// var userDatas schema.UserDatas
 	// if err := json.Unmarshal([]byte(UsersDatas), &userDatas); err != nil {

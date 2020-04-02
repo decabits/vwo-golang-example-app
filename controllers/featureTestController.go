@@ -3,8 +3,8 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/Piyushhbhutoria/vwo-go-sdk/api"
-	"github.com/Piyushhbhutoria/vwo-go-sdk/schema"
+	"github.com/decabits/vwo-golang-sdk/api"
+	"github.com/decabits/vwo-golang-sdk/schema"
 	"github.com/decabits/vwo-golang-example-app/config"
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/decabits/vwo-golang-example-app/util"

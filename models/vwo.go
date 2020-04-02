@@ -1,9 +1,9 @@
 package models
 
 import (
-	vwo "github.com/Piyushhbhutoria/vwo-go-sdk"
-	"github.com/Piyushhbhutoria/vwo-go-sdk/schema"
 	"github.com/decabits/vwo-golang-example-app/config"
+	vwo "github.com/decabits/vwo-golang-sdk"
+	"github.com/decabits/vwo-golang-sdk/schema"
 )
 
 // VWO struct
