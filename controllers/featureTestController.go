@@ -3,11 +3,11 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/decabits/vwo-golang-sdk/api"
-	"github.com/decabits/vwo-golang-sdk/schema"
 	"github.com/decabits/vwo-golang-example-app/config"
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/decabits/vwo-golang-example-app/util"
+	"github.com/decabits/vwo-golang-sdk/api"
+	"github.com/decabits/vwo-golang-sdk/schema"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,16 +15,16 @@ func FeatureTestController(c *gin.Context) {
 	config := config.GetConfig()
 	userID := util.GetRandomUser()
 	campaignKey := config.GetString("featureTestCampaignKey")
-	
+
 	vwo := models.VWO{}
 	instance := vwo.GetVWOInstance()
 	options := schema.Options{}
 
 	var (
-		stringVariable string
-		intVariable string
-		boolVariable string
-		doubleVariable string
+		stringVariable = "string2"
+		intVariable    = "int2"
+		boolVariable   = "bool2"
+		doubleVariable = "float2"
 	)
 	strValue := api.GetFeatureVariableValue(instance, campaignKey, stringVariable, userID, options)
 	intValue := api.GetFeatureVariableValue(instance, campaignKey, intVariable, userID, options)
@@ -32,13 +32,14 @@ func FeatureTestController(c *gin.Context) {
 	dubValue := api.GetFeatureVariableValue(instance, campaignKey, doubleVariable, userID, options)
 
 	c.JSON(http.StatusOK, gin.H{
-      "stringkey": stringVariable,
-      "stringvalue": strValue,
-      "intkey": intVariable,
-      "intvalue": intValue,
-      "boolkey": boolVariable,
-      "boolvalue": boolValue,
-      "doublekey": doubleVariable,
-      "doublevalue": dubValue,
-    })
+		"userID":      userID,
+		"stringkey":   stringVariable,
+		"stringvalue": strValue,
+		"intkey":      intVariable,
+		"intvalue":    intValue,
+		"boolkey":     boolVariable,
+		"boolvalue":   boolValue,
+		"doublekey":   doubleVariable,
+		"doublevalue": dubValue,
+	})
 }
