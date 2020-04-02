@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Piyushhbhutoria/vwo-go-sdk/api"
+	"github.com/Piyushhbhutoria/vwo-go-sdk/schema"
 	"github.com/decabits/vwo-golang-example-app/config"
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/decabits/vwo-golang-example-app/util"
@@ -16,9 +17,13 @@ func ABController(c *gin.Context) {
 
 	vwo := models.VWO{}
 	instance := vwo.GetVWOInstance()
-	variationName := api.Activate(instance, config.GetString("abCampaignKey"), userID)
+	options := schema.Options{}
+
+	variationName := api.ActivateWithOptions(instance, config.GetString("abCampaignKey"), userID, options)
+	// variationName := api.Activate(instance, config.GetString("abCampaignKey"), userID)
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": variationName,
+		"userID":    userID,
+		"variation": variationName,
 	})
 }

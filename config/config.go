@@ -1,7 +1,7 @@
 package config
 
 import (
-	"log"
+	log "github.com/golang/glog"
 	"path/filepath"
 
 	"github.com/spf13/viper"

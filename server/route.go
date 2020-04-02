@@ -13,6 +13,8 @@ func NewRouter() *gin.Engine {
 	ping := new(controllers.StatusController)
 	router.GET("/ping", ping.Status)
 	router.GET("/ab", controllers.ABController)
+	router.GET("/feature-rollout", controllers.FeatureRolloutController)
+	router.GET("/feature-test", controllers.FeatureTestController)
 
 	return router
 }
