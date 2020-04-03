@@ -11,7 +11,7 @@ type VWO struct {
 	vwoInstance schema.VwoInstance
 }
 
-//Init ...
+// Init ...
 func (v *VWO) Init() {
 	config := config.GetConfig()
 	storage := &UserStorageData{}
@@ -20,7 +20,7 @@ func (v *VWO) Init() {
 	v.vwoInstance = VWO
 }
 
-//GetVWOInstance ...
+// GetVWOInstance ...
 func (v *VWO) GetVWOInstance() schema.VwoInstance {
 	return v.vwoInstance
 }

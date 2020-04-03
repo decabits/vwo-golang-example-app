@@ -19,12 +19,12 @@ var UsersDatas = `{
 	"campaignKey": [
 		{
 			"UserID": "user-identifier",
-			"CampaignKey": "campaign unique key",
+			"CampaignKey": "campaignKey",
 			"VariationName": "Variation-2",
 		},
 		{
 			"UserID": "user-identifier",
-			"CampaignKey": "campaign unique key",
+			"CampaignKey": "campaignKey",
 			"VariationName": "Variation-2",
 		}
 	]

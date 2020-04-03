@@ -17,6 +17,7 @@ func FeatureTestController(c *gin.Context) {
 	campaignKey := config.GetString("featureTestCampaignKey")
 
 	vwo := models.VWO{}
+	vwo.Init()
 	instance := vwo.GetVWOInstance()
 	options := schema.Options{}
 

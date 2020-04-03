@@ -18,8 +18,11 @@ func ABController(c *gin.Context) {
 	abCampaigngoalIdentifier := config.GetString("abCampaignGoalIdentifier")
 
 	vwo := models.VWO{}
+	vwo.Init()
 	instance := vwo.GetVWOInstance()
-	options := schema.Options{}
+	options := schema.Options{
+		RevenueGoal: 12,
+	}
 
 	isPartOfCampaign := false
 	variationName := api.ActivateWithOptions(instance, campaignKey, userID, options)

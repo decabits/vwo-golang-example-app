@@ -9,6 +9,7 @@ import (
 
 func GoSDKController(c *gin.Context) {
 	vwo := models.VWO{}
+	vwo.Init()
 	instance := vwo.GetVWOInstance()
 
 	c.JSON(http.StatusOK, instance.SettingsFile)

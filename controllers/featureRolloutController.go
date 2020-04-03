@@ -17,6 +17,7 @@ func FeatureRolloutController(c *gin.Context) {
 	campaignKey := config.GetString("featureRolloutCampaignKey")
 
 	vwo := models.VWO{}
+	vwo.Init()
 	instance := vwo.GetVWOInstance()
 	options := schema.Options{}
 
