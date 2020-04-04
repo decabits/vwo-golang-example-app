@@ -8,7 +8,7 @@ import (
 // UserStorage interface
 type UserStorage interface {
 	Get(userID, campaignKey string) schema.UserData
-	Set(userData schema.UserData) bool
+	Set(userData schema.UserData)
 	Exist() bool
 }
 
@@ -54,9 +54,23 @@ func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
 }
 
 // Set function
-func (us *UserStorageData) Set(userData schema.UserData) bool {
-	
-	return true
+func (us *UserStorageData) Set(userdata schema.UserData) {
+	var userDatas map[string][]schema.UserData
+	flag := false
+	userData, ok := userDatas[userdata.CampaignKey]
+	if ok {
+		for _, user := range userData {
+			if user.UserID == userdata.UserID {
+				flag = true
+			}
+		}
+		if !flag {
+			userDatas[userdata.CampaignKey] = append(userDatas[userdata.CampaignKey], userdata)
+		}
+	}
+	userDatas[userdata.CampaignKey] = []schema.UserData{
+		userdata,
+	}
 }
 
 // Exist function
