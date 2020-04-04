@@ -34,7 +34,6 @@ func GetRandomUser() string {
 		"Zeba",
 	}
 
-	
 	ind := rand.Intn(24)
 	return users[ind]
 }
