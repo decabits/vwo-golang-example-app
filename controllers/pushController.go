@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// PushController ...
 func PushController(c *gin.Context) {
 	userID := util.GetRandomUser()
 

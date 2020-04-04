@@ -1,6 +1,9 @@
 package models
 
 import (
+	"encoding/json"
+	"errors"
+
 	"github.com/decabits/vwo-golang-sdk/schema"
 	//"github.com/decabits/vwo-golang-example-app/config"
 )
@@ -8,14 +11,15 @@ import (
 // UserStorage interface
 type UserStorage interface {
 	Get(userID, campaignKey string) schema.UserData
-	Set(userStorageData interface{})
+	Set(schema.UserData) bool
 	Exist() bool
 }
 
 // UserStorageData struct
 type UserStorageData struct{}
 
-var UsersDatas = `{
+// UsersInfo ...
+var UsersInfo = `{
 	"campaignKey": [
 		{
 			"UserID": "user-identifier",
@@ -37,27 +41,32 @@ var UsersDatas = `{
 }
 */
 func (us *UserStorageData) Get(userID, campaignKey string) (schema.UserData, error) {
-	// var userDatas schema.UserDatas
-	// if err := json.Unmarshal([]byte(UsersDatas), &userDatas); err != nil {
-	// 	return schema.UserData{}, errors.New("Error: " + err.Error())
-	// }
-	// for _, userData := range userDatas {
-	// 	if userData.UserID == userID && userData.CampaignKey == campaignKey {
-	// 		return userData, nil
-	// 	}
-	// }
-	return schema.UserData{}, nil
+	var userDatas []schema.UserData
+	err := json.Unmarshal([]byte(UsersInfo), &userDatas)
+	if err != nil {
+		return schema.UserData{}, errors.New("Error: " + err.Error())
+	}
+	if len(userDatas) ==0{
+		return schema.UserData{},errors.New("No User Data Found")
+	} else if len(userDatas) == 1{
+		return userDatas[0], nil
+	} else{
+		for _, userdata := range userDatas{
+			if userdata.CampaignKey == campaignKey && userdata.UserID == userID {
+				return userdata,nil
+			}
+		}
+	}
+	return  schema.UserData{},errors.New("No User Data Found")
 }
 
 // Set function
-func (us *UserStorageData) Set(userStorageData interface{}) bool {
-	// if (userIDs.indexOf(userStorageData.userId) === -1) {
-	//   userData[userStorageData.campaignKey] = userData[userStorageData.campaignKey] || [];
-	//   userData[userStorageData.campaignKey].push(userStorageData);
-
-	//   userIds.push(userStorageData.userId);
-	// }
-	return true
+func (us *UserStorageData) Set(userData interface{}) (bool, error) {
+	userdata, err := json.Marshal(userData)
+	if err != nil {
+		return false, errors.New("Error: " + err.Error())
+	}
+	return true, nil
 }
 
 // Exist function
