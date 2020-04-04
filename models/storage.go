@@ -8,14 +8,15 @@ import (
 // UserStorage interface
 type UserStorage interface {
 	Get(userID, campaignKey string) schema.UserData
-	Set(userStorageData interface{})
+	Set(userData schema.UserData)
 	Exist() bool
 }
 
 // UserStorageData struct
 type UserStorageData struct{}
 
-var UsersDatas = `{
+// UsersInfo ...
+var UsersInfo = `{
 	"campaignKey": [
 		{
 			"UserID": "user-identifier",
@@ -36,28 +37,40 @@ var UsersDatas = `{
 	struct
 }
 */
-func (us *UserStorageData) Get(userID, campaignKey string) (schema.UserData, error) {
-	// var userDatas schema.UserDatas
-	// if err := json.Unmarshal([]byte(UsersDatas), &userDatas); err != nil {
-	// 	return schema.UserData{}, errors.New("Error: " + err.Error())
-	// }
-	// for _, userData := range userDatas {
-	// 	if userData.UserID == userID && userData.CampaignKey == campaignKey {
-	// 		return userData, nil
-	// 	}
-	// }
-	return schema.UserData{}, nil
+func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
+	var userDatas map[string][]schema.UserData
+	if len(userDatas) == 0 {
+		return schema.UserData{}
+	}
+	userData, ok := userDatas[campaignKey]
+	if ok {
+		for _, userdata := range userData {
+			if userdata.UserID == userID {
+				return userdata
+			}
+		}
+	}
+	return schema.UserData{}
 }
 
 // Set function
-func (us *UserStorageData) Set(userStorageData interface{}) bool {
-	// if (userIDs.indexOf(userStorageData.userId) === -1) {
-	//   userData[userStorageData.campaignKey] = userData[userStorageData.campaignKey] || [];
-	//   userData[userStorageData.campaignKey].push(userStorageData);
-
-	//   userIds.push(userStorageData.userId);
-	// }
-	return true
+func (us *UserStorageData) Set(userdata schema.UserData) {
+	var userDatas map[string][]schema.UserData
+	flag := false
+	userData, ok := userDatas[userdata.CampaignKey]
+	if ok {
+		for _, user := range userData {
+			if user.UserID == userdata.UserID {
+				flag = true
+			}
+		}
+		if !flag {
+			userDatas[userdata.CampaignKey] = append(userDatas[userdata.CampaignKey], userdata)
+		}
+	}
+	userDatas[userdata.CampaignKey] = []schema.UserData{
+		userdata,
+	}
 }
 
 // Exist function

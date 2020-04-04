@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GoSDKController ...
 func GoSDKController(c *gin.Context) {
 	vwo := models.VWO{}
 	vwo.Init()

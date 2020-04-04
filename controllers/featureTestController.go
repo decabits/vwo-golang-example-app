@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// FeatureTestController ...
 func FeatureTestController(c *gin.Context) {
 	config := config.GetConfig()
 	userID := util.GetRandomUser()

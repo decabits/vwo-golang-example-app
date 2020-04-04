@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// FeatureRolloutController ...
 func FeatureRolloutController(c *gin.Context) {
 	config := config.GetConfig()
 	userID := util.GetRandomUser()
