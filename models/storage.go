@@ -10,8 +10,8 @@ import (
 
 // UserStorage interface
 type UserStorage interface {
-	Get(userID, campaignKey string) schema.UserData
-	Set(schema.UserData) bool
+	Get(userID, campaignKey string) (schema.UserData, error)
+	Set(interface{}) (bool, error)
 	Exist() bool
 }
 
@@ -46,18 +46,18 @@ func (us *UserStorageData) Get(userID, campaignKey string) (schema.UserData, err
 	if err != nil {
 		return schema.UserData{}, errors.New("Error: " + err.Error())
 	}
-	if len(userDatas) ==0{
-		return schema.UserData{},errors.New("No User Data Found")
-	} else if len(userDatas) == 1{
+	if len(userDatas) == 0 {
+		return schema.UserData{}, errors.New("No User Data Found")
+	} else if len(userDatas) == 1 {
 		return userDatas[0], nil
-	} else{
-		for _, userdata := range userDatas{
+	} else {
+		for _, userdata := range userDatas {
 			if userdata.CampaignKey == campaignKey && userdata.UserID == userID {
-				return userdata,nil
+				return userdata, nil
 			}
 		}
 	}
-	return  schema.UserData{},errors.New("No User Data Found")
+	return schema.UserData{}, errors.New("No User Data Found")
 }
 
 // Set function
@@ -66,6 +66,7 @@ func (us *UserStorageData) Set(userData interface{}) (bool, error) {
 	if err != nil {
 		return false, errors.New("Error: " + err.Error())
 	}
+	_ = userdata
 	return true, nil
 }
 
