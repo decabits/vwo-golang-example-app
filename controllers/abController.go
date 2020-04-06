@@ -21,9 +21,7 @@ func ABController(c *gin.Context) {
 	vwo := models.VWO{}
 	vwo.Init()
 	instance := vwo.GetVWOInstance()
-	options := schema.Options{
-		RevenueGoal: 12,
-	}
+	options := schema.Options{}
 
 	isPartOfCampaign := false
 	variationName := api.ActivateWithOptions(instance, campaignKey, userID, options)

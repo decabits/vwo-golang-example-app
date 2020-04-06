@@ -5,11 +5,7 @@ import (
 )
 
 // UserStorage interface
-type UserStorage interface {
-	Get(userID, campaignKey string) schema.UserData
-	Set(userData schema.UserData)
-	Exist() bool
-}
+type UserStorage schema.UserStorage
 
 // UserStorageData struct
 type UserStorageData struct{}
@@ -52,13 +48,18 @@ func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
 }
 
 // Set function
-func (us *UserStorageData) Set(userdata schema.UserData) {
+func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
 	var userDatas map[string][]schema.UserData
 	// Conect your database here to insert the value
 	// Uncomment the below part to user JSON as data base
 	// if err := json.Unmarshal([]byte(data), &userDatas); err != nil {
 	// 	fmt.Print("Could not unmarshall")
 	// }
+	userdata := schema.UserData{
+		UserID:        userID,
+		CampaignKey:   campaignKey,
+		VariationName: variationName,
+	}
 	flag := false
 	userData, ok := userDatas[userdata.CampaignKey]
 	if ok {
