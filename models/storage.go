@@ -83,5 +83,5 @@ func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
 
 // Exist function
 func (us *UserStorageData) Exist() bool {
-	return true
+	return false
 }
