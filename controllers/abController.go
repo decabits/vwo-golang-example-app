@@ -15,6 +15,7 @@ import (
 func ABController(c *gin.Context) {
 	config := config.GetConfig()
 	userID := util.GetRandomUser()
+	// userID = "Faizan"
 	campaignKey := config.GetString("abCampaignKey")
 	abCampaigngoalIdentifier := config.GetString("abCampaignGoalIdentifier")
 
@@ -34,6 +35,7 @@ func ABController(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"userID":           userID,
 		"variation":        variationName,
+		"campaign":         campaignKey,
 		"isPartOfCampaign": isPartOfCampaign,
 		"track":            track,
 	})

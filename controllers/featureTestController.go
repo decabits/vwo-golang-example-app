@@ -28,6 +28,9 @@ func FeatureTestController(c *gin.Context) {
 		boolVariable   = "bool2"
 		doubleVariable = "float2"
 	)
+
+	isEnabled := api.IsFeatureEnabled(instance, campaignKey, userID, options)
+
 	strValue := api.GetFeatureVariableValue(instance, campaignKey, stringVariable, userID, options)
 	intValue := api.GetFeatureVariableValue(instance, campaignKey, intVariable, userID, options)
 	boolValue := api.GetFeatureVariableValue(instance, campaignKey, boolVariable, userID, options)
@@ -35,13 +38,15 @@ func FeatureTestController(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"userID":      userID,
-		"stringkey":   stringVariable,
-		"stringvalue": strValue,
-		"intkey":      intVariable,
-		"intvalue":    intValue,
-		"boolkey":     boolVariable,
-		"boolvalue":   boolValue,
-		"doublekey":   doubleVariable,
-		"doublevalue": dubValue,
+		"campaignKey": campaignKey,
+		"isEnabled":   isEnabled,
+		"string": gin.H{"key": stringVariable,
+			"value": strValue},
+		"integer": gin.H{"key": intVariable,
+			"value": intValue},
+		"boolean": gin.H{"key": boolVariable,
+			"value": boolValue},
+		"double": gin.H{"key": doubleVariable,
+			"value": dubValue},
 	})
 }
