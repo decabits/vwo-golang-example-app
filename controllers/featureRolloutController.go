@@ -14,8 +14,15 @@ import (
 // FeatureRolloutController ...
 func FeatureRolloutController(c *gin.Context) {
 	config := config.GetConfig()
-	userID := util.GetRandomUser()
-	campaignKey := config.GetString("featureRolloutCampaignKey")
+	userID := c.Query("userId")
+	if userID == "" {
+		userID = util.GetRandomUser()
+	}
+	// userID = "Faizan"
+	campaignKey := c.Query("cKey")
+	if campaignKey == "" {
+		campaignKey = config.GetString("featureRolloutCampaignKey")
+	}
 
 	vwo := models.VWO{}
 	vwo.Init()
