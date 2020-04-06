@@ -14,9 +14,15 @@ import (
 // ABController ...
 func ABController(c *gin.Context) {
 	config := config.GetConfig()
-	userID := util.GetRandomUser()
+	userID := c.Query("userId")
+	if userID == "" {
+		userID = util.GetRandomUser()
+	}
 	// userID = "Faizan"
-	campaignKey := config.GetString("abCampaignKey")
+	campaignKey := c.Query("cKey")
+	if campaignKey == "" {
+		campaignKey = config.GetString("abCampaignKey")
+	}
 	abCampaigngoalIdentifier := config.GetString("abCampaignGoalIdentifier")
 
 	vwo := models.VWO{}
