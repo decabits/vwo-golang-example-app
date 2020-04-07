@@ -1,11 +1,11 @@
 accountID: "89499"
 SDKKey: "7aeed7f67f5a0b0fbe476c1f086a7038"
-abCampaignKey: "rubyab1"
+abCampaignKey: "phpab3"
 abCampaignGoalIdentifier: "custom"
 featureRolloutCampaignKey: "php1"
 featureTestCampaignKey: "php2"
 pollTime: 10000
-port: ":3000"
+port: ":4001"
 userData:
   {
     "hhjjjj":

@@ -11,10 +11,20 @@ import (
 
 // PushController ...
 func PushController(c *gin.Context) {
-	userID := util.GetRandomUser()
+	userID := c.Query("userId")
+	tagKey := c.Query("tagKey")
+	tagValue := c.Query("tagValue")
+	if userID == "" {
+		userID = util.GetRandomUser()
+	}
 
-	tagKey := "hello2"
-  	tagValue := "b"
+	if tagKey == "" {
+		tagKey = "hello2"
+	}
+
+	if tagValue == "" {
+		tagValue = "v"
+	}
 
 	vwo := models.VWO{}
 	vwo.Init()
@@ -25,5 +35,7 @@ func PushController(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"userID": userID,
 		"result": result,
+		"tagKey": tagKey,
+		"tagValue": tagValue,
 	})
 }

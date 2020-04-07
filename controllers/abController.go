@@ -18,12 +18,14 @@ func ABController(c *gin.Context) {
 	if userID == "" {
 		userID = util.GetRandomUser()
 	}
-	// userID = "Faizan"
+	// userID = "Gimmy"
 	campaignKey := c.Query("cKey")
 	if campaignKey == "" {
 		campaignKey = config.GetString("abCampaignKey")
 	}
+	// campaignKey = "phpab3"
 	abCampaigngoalIdentifier := config.GetString("abCampaignGoalIdentifier")
+	// abCampaigngoalIdentifier = "custom"
 
 	vwo := models.VWO{}
 	vwo.Init()
