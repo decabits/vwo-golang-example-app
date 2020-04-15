@@ -6,6 +6,7 @@ import (
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/decabits/vwo-golang-example-app/util"
 	"github.com/decabits/vwo-golang-sdk/api"
+	"github.com/decabits/vwo-golang-sdk/schema"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,11 +20,11 @@ func PushController(c *gin.Context) {
 	}
 
 	if tagKey == "" {
-		tagKey = "hello2"
+		tagKey = "tempKey"
 	}
 
 	if tagValue == "" {
-		tagValue = "v"
+		tagValue = "tempVal"
 	}
 
 	vwo := models.VWO{}
@@ -32,10 +33,14 @@ func PushController(c *gin.Context) {
 
 	result := api.Push(instance, tagKey, tagValue, userID)
 
-	c.JSON(http.StatusOK, gin.H{
-		"userID": userID,
-		"result": result,
-		"tagKey": tagKey,
-		"tagValue": tagValue,
+	var settings schema.SettingsFile
+	settings = instance.SettingsFile
+
+	c.HTML(http.StatusOK, "push.html", gin.H{
+		"settings_file": settings,
+		"tag_key":       tagKey,
+		"tag_value":     tagValue,
+		"user_id":       userID,
+		"result":        result,
 	})
 }

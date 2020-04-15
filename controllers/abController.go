@@ -40,11 +40,19 @@ func ABController(c *gin.Context) {
 
 	track := api.TrackWithOptions(instance, campaignKey, userID, abCampaigngoalIdentifier, options)
 
-	c.JSON(http.StatusOK, gin.H{
-		"userID":           userID,
-		"variation":        variationName,
-		"campaign":         campaignKey,
-		"isPartOfCampaign": isPartOfCampaign,
-		"track":            track,
+	var settings schema.SettingsFile
+	settings = instance.SettingsFile
+
+	c.HTML(http.StatusOK, "ab.html", gin.H{
+		"campaign_type":               "Visual_AB",
+		"settings_file":               settings,
+		"ab_campaign_key":             campaignKey,
+		"ab_campaign_goal_identifier": "",
+		"custom_variables":            "",
+		"user_id":                     userID,
+		"is_part_of_campaign":         isPartOfCampaign,
+		"variation_name":              variationName,
+		"button":                      `<button class="v1">Control</button>`,
+		"track":                       track,
 	})
 }

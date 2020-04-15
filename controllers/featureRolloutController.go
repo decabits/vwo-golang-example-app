@@ -29,31 +29,44 @@ func FeatureRolloutController(c *gin.Context) {
 	instance := vwo.GetVWOInstance()
 	options := schema.Options{}
 
-	var (
-		stringVariable = "string1"
-		intVariable    = "int1"
-		boolVariable   = "bool1"
-		doubleVariable = "float1"
-	)
+	// var (
+	// 	stringVariable = "string1"
+	// 	intVariable    = "int1"
+	// 	boolVariable   = "bool1"
+	// 	doubleVariable = "float1"
+	// )
 
 	isEnabled := api.IsFeatureEnabled(instance, campaignKey, userID, options)
 	
-	strValue := api.GetFeatureVariableValue(instance, campaignKey, stringVariable, userID, options)
-	intValue := api.GetFeatureVariableValue(instance, campaignKey, intVariable, userID, options)
-	boolValue := api.GetFeatureVariableValue(instance, campaignKey, boolVariable, userID, options)
-	dubValue := api.GetFeatureVariableValue(instance, campaignKey, doubleVariable, userID, options)
+	// strValue := api.GetFeatureVariableValue(instance, campaignKey, stringVariable, userID, options)
+	// intValue := api.GetFeatureVariableValue(instance, campaignKey, intVariable, userID, options)
+	// boolValue := api.GetFeatureVariableValue(instance, campaignKey, boolVariable, userID, options)
+	// dubValue := api.GetFeatureVariableValue(instance, campaignKey, doubleVariable, userID, options)
 
-	c.JSON(http.StatusOK, gin.H{
-		"userID":      userID,
-		"campaignKey": campaignKey,
-		"isEnabled":   isEnabled,
-		"string": gin.H{"key": stringVariable,
-			"value": strValue},
-		"integer": gin.H{"key": intVariable,
-			"value": intValue},
-		"boolean": gin.H{"key": boolVariable,
-			"value": boolValue},
-		"double": gin.H{"key": doubleVariable,
-			"value": dubValue},
+	// c.JSON(http.StatusOK, gin.H{
+	// 	"userID":      userID,
+	// 	"campaignKey": campaignKey,
+	// 	"isEnabled":   isEnabled,
+	// 	"string": gin.H{"key": stringVariable,
+	// 		"value": strValue},
+	// 	"integer": gin.H{"key": intVariable,
+	// 		"value": intValue},
+	// 	"boolean": gin.H{"key": boolVariable,
+	// 		"value": boolValue},
+	// 	"double": gin.H{"key": doubleVariable,
+	// 		"value": dubValue},
+	// })
+
+	var settings schema.SettingsFile
+	settings = instance.SettingsFile
+
+	c.HTML(http.StatusOK, "feature-rollout.html", gin.H{
+		"campaign_type": "Feature_Rollout",
+		"settings_file": settings,
+		"feature_rollout_campaign_key": campaignKey,
+		"custom_variables": "",
+		"user_id": userID,
+		"is_user_part_of_feature_rollout_campaign": isEnabled,
 	})
+
 }

@@ -43,17 +43,34 @@ func FeatureTestController(c *gin.Context) {
 	boolValue := api.GetFeatureVariableValue(instance, campaignKey, boolVariable, userID, options)
 	dubValue := api.GetFeatureVariableValue(instance, campaignKey, doubleVariable, userID, options)
 
-	c.JSON(http.StatusOK, gin.H{
-		"userID":      userID,
-		"campaignKey": campaignKey,
-		"isEnabled":   isEnabled,
-		"string": gin.H{"key": stringVariable,
-			"value": strValue},
-		"integer": gin.H{"key": intVariable,
-			"value": intValue},
-		"boolean": gin.H{"key": boolVariable,
-			"value": boolValue},
-		"double": gin.H{"key": doubleVariable,
-			"value": dubValue},
+	// c.JSON(http.StatusOK, gin.H{
+	// 	"userID":      userID,
+	// 	"campaignKey": campaignKey,
+	// 	"isEnabled":   isEnabled,
+	// 	"string": gin.H{"key": stringVariable,
+	// 		"value": strValue},
+	// 	"integer": gin.H{"key": intVariable,
+	// 		"value": intValue},
+	// 	"boolean": gin.H{"key": boolVariable,
+	// 		"value": boolValue},
+	// 	"double": gin.H{"key": doubleVariable,
+	// 		"value": dubValue},
+	// })
+
+	var settings schema.SettingsFile
+	settings = instance.SettingsFile
+
+	c.HTML(http.StatusOK, "feature-test.html", gin.H{
+		"campaign_type": "Feature_Test",
+		"settings_file": settings,
+		"feature_campaign_key": campaignKey,
+		"feature_campaign_goal_identifier": "",
+		"custom_variables": "",
+		"user_id": userID,
+		"is_user_part_of_feature_campaign": isEnabled,
+		"boolean_variable": boolValue,
+		"integer_variable": intValue,
+		"double_variable": dubValue,
+		"string_variable": strValue,
 	})
 }

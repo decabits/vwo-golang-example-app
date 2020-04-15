@@ -5,10 +5,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//NewRouter function comtrols the routes
 func NewRouter() *gin.Engine {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
+	router.LoadHTMLGlob("templates/*")
 
 	ping := new(controllers.StatusController)
 	router.GET("/ping", ping.Status)
@@ -17,6 +19,7 @@ func NewRouter() *gin.Engine {
 	router.GET("/feature-test", controllers.FeatureTestController)
 	router.GET("/push", controllers.PushController)
 	router.GET("/go-sdk", controllers.GoSDKController)
+	router.GET("/", controllers.HomePage)
 
 	return router
 }
