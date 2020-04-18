@@ -1,12 +1,12 @@
 package controllers
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/decabits/vwo-golang-example-app/util"
 	"github.com/decabits/vwo-golang-sdk/api"
-	"github.com/decabits/vwo-golang-sdk/schema"
 	"github.com/gin-gonic/gin"
 )
 
@@ -33,14 +33,16 @@ func PushController(c *gin.Context) {
 
 	result := api.Push(instance, tagKey, tagValue, userID)
 
-	var settings schema.SettingsFile
-	settings = instance.SettingsFile
+	settingsFile, err := json.Marshal(instance.SettingsFile)
+	if err != nil {
+		instance.Logger.Error(err)
+	}
 
 	c.HTML(http.StatusOK, "push.html", gin.H{
-		"settings_file": settings,
-		"tag_key":       tagKey,
-		"tag_value":     tagValue,
-		"user_id":       userID,
-		"result":        result,
+		"settingsFile": string(settingsFile),
+		"tagKey":       tagKey,
+		"tagValue":     tagValue,
+		"userID":       userID,
+		"result":       result,
 	})
 }

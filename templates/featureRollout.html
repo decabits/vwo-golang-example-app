@@ -1,6 +1,34 @@
 <html>
 
 <head>
+    <script>
+        function syntaxHighlight(json) {
+            json = JSON.stringify(JSON.parse(json), undefined, 2);
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(
+                /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+                function (match) {
+                    var cls = 'number';
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'key';
+                        } else {
+                            cls = 'string';
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'boolean';
+                    } else if (/null/.test(match)) {
+                        cls = 'null';
+                    }
+                    return '<span class="' + cls + '">' + match + '</span>';
+                });
+        }
+
+        window.onload = () => {
+            document.getElementById('settings').innerHTML = syntaxHighlight(document.getElementById('settings')
+                .innerText);
+        }
+    </script>
     <title>VWO server-side Experimentation</title>
     <style>
         .center {
@@ -9,6 +37,7 @@
             align-items: center;
             margin-top: 20px;
         }
+
         pre {
             background-color: ghostwhite;
             border: 1px solid silver;
@@ -16,6 +45,7 @@
             max-height: 80vh;
             overflow: auto;
         }
+
         .margin--top {
             margin-top: 20px;
         }
@@ -26,18 +56,6 @@
 
         .color-blue {
             color: #00a8ff;
-        }
-
-        .json-key {
-            color: brown;
-        }
-
-        .json-value {
-            color: navy;
-        }
-
-        .json-string {
-            color: olive;
         }
 
         .main-container {
@@ -73,9 +91,9 @@
         }
 
         .home {
-        position: fixed;
-        top: 10px;
-        left: 20px;
+            position: fixed;
+            top: 10px;
+            left: 20px;
         }
     </style>
 </head>
@@ -83,11 +101,11 @@
 <body>
     <a href="/" class="home">HOME</a>
     <div>
-        <h2 class="center  color-blue">VWO Golang SDK Example : <strong>{{ .campaign_type }}</strong></h2>
+        <h2 class="center  color-blue">VWO Golang SDK Example : <strong>{{ .campaignType }}</strong></h2>
         <div class="main-container">
             <div class="left-container">
                 <h2 class="center  color-grey">Settings</h2>
-                <pre><code>{{ .settings_file }}</code></pre>
+                <pre id="settings"><code>{{ .settingsFile }}</code></pre>
             </div>
 
             <div class="right-container">
@@ -95,17 +113,17 @@
                     <h2 class="center  color-grey">Details</h2>
 
                     <div class="center  margin--top">
-                        <div>Campaign key - <strong>{{ .feature_rollout_campaign_key }}</strong></div>
+                        <div>Campaign key - <strong>{{ .campaifeatureRolloutCampaignKeyType }}</strong></div>
                     </div>
                     <div class="center  margin--top">
                         <div>Custom Variables -</div>
-                        <pre><code>{{ .custom_variables }}</code></pre>
+                        <pre><code>{{ .customVariables }}</code></pre>
                     </div>
                     <div class="center  margin--top">
-                        <div>User ID - <strong>{{ .user_id }}</strong></div>
+                        <div>User ID - <strong>{{ .userID }}</strong></div>
                     </div>
 
-                    {{if .is_user_part_of_feature_rollout_campaign }}
+                    {{if .isUserPartOfFeatureRolloutCampaign }}
                     <div class="center  margin--top">
                         <div>User became a part of feature rollout </div>
                     </div>

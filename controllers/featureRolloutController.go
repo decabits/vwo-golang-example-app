@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/decabits/vwo-golang-example-app/config"
@@ -18,7 +19,6 @@ func FeatureRolloutController(c *gin.Context) {
 	if userID == "" {
 		userID = util.GetRandomUser()
 	}
-	// userID = "Faizan"
 	campaignKey := c.Query("cKey")
 	if campaignKey == "" {
 		campaignKey = config.GetString("featureRolloutCampaignKey")
@@ -29,44 +29,20 @@ func FeatureRolloutController(c *gin.Context) {
 	instance := vwo.GetVWOInstance()
 	options := schema.Options{}
 
-	// var (
-	// 	stringVariable = "string1"
-	// 	intVariable    = "int1"
-	// 	boolVariable   = "bool1"
-	// 	doubleVariable = "float1"
-	// )
-
 	isEnabled := api.IsFeatureEnabled(instance, campaignKey, userID, options)
-	
-	// strValue := api.GetFeatureVariableValue(instance, campaignKey, stringVariable, userID, options)
-	// intValue := api.GetFeatureVariableValue(instance, campaignKey, intVariable, userID, options)
-	// boolValue := api.GetFeatureVariableValue(instance, campaignKey, boolVariable, userID, options)
-	// dubValue := api.GetFeatureVariableValue(instance, campaignKey, doubleVariable, userID, options)
 
-	// c.JSON(http.StatusOK, gin.H{
-	// 	"userID":      userID,
-	// 	"campaignKey": campaignKey,
-	// 	"isEnabled":   isEnabled,
-	// 	"string": gin.H{"key": stringVariable,
-	// 		"value": strValue},
-	// 	"integer": gin.H{"key": intVariable,
-	// 		"value": intValue},
-	// 	"boolean": gin.H{"key": boolVariable,
-	// 		"value": boolValue},
-	// 	"double": gin.H{"key": doubleVariable,
-	// 		"value": dubValue},
-	// })
+	settingsFile, err := json.Marshal(instance.SettingsFile)
+	if err != nil {
+		instance.Logger.Error(err)
+	}
 
-	var settings schema.SettingsFile
-	settings = instance.SettingsFile
-
-	c.HTML(http.StatusOK, "feature-rollout.html", gin.H{
-		"campaign_type": "Feature_Rollout",
-		"settings_file": settings,
-		"feature_rollout_campaign_key": campaignKey,
-		"custom_variables": "",
-		"user_id": userID,
-		"is_user_part_of_feature_rollout_campaign": isEnabled,
+	c.HTML(http.StatusOK, "featureRollout.html", gin.H{
+		"campaignType":                        "FEATURE_ROLLOUT",
+		"settingsFile":                        string(settingsFile),
+		"campaifeatureRolloutCampaignKeyType": campaignKey,
+		"customVariables":                     options.CustomVariables,
+		"userID":                              userID,
+		"isUserPartOfFeatureRolloutCampaign":  isEnabled,
 	})
 
 }

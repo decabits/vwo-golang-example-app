@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/decabits/vwo-golang-example-app/config"
@@ -18,12 +19,10 @@ func ABController(c *gin.Context) {
 	if userID == "" {
 		userID = util.GetRandomUser()
 	}
-	// userID = "Gimmy"
 	campaignKey := c.Query("cKey")
 	if campaignKey == "" {
 		campaignKey = config.GetString("abCampaignKey")
 	}
-	// campaignKey = "phpab3"
 	abCampaigngoalIdentifier := config.GetString("abCampaignGoalIdentifier")
 	// abCampaigngoalIdentifier = "custom"
 
@@ -40,19 +39,30 @@ func ABController(c *gin.Context) {
 
 	track := api.TrackWithOptions(instance, campaignKey, userID, abCampaigngoalIdentifier, options)
 
-	var settings schema.SettingsFile
-	settings = instance.SettingsFile
+	settingsFile, err := json.Marshal(instance.SettingsFile)
+	if err != nil {
+		instance.Logger.Error(err)
+	}
+
+	var class string
+	if variationName == "Control" {
+		class = "v1"
+	} else if variationName == "Variation-1" {
+		class = "v2"
+	} else {
+		class = "v3"
+	}
 
 	c.HTML(http.StatusOK, "ab.html", gin.H{
-		"campaign_type":               "Visual_AB",
-		"settings_file":               settings,
-		"ab_campaign_key":             campaignKey,
-		"ab_campaign_goal_identifier": "",
-		"custom_variables":            "",
-		"user_id":                     userID,
-		"is_part_of_campaign":         isPartOfCampaign,
-		"variation_name":              variationName,
-		"button":                      `<button class="v1">Control</button>`,
-		"track":                       track,
+		"campaignType":             "VISUAL_AB",
+		"settingsFile":             string(settingsFile),
+		"abCampaignKey":            campaignKey,
+		"abCampaignGoalIdentifier": abCampaigngoalIdentifier,
+		"customVariables":          options.CustomVariables,
+		"userID":                   userID,
+		"isPartOfCampaign":         isPartOfCampaign,
+		"variationName":            variationName,
+		"buttonClass":              class,
+		"track":                    track,
 	})
 }

@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"encoding/json"
 
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/gin-gonic/gin"
@@ -13,5 +14,12 @@ func GoSDKController(c *gin.Context) {
 	vwo.Init()
 	instance := vwo.GetVWOInstance()
 
-	c.JSON(http.StatusOK, instance.SettingsFile)
+	settingsFile, err := json.Marshal(instance.SettingsFile)
+	if err != nil {
+		instance.Logger.Error(err)
+	}
+
+	c.HTML(http.StatusOK, "goSDK.html", gin.H{
+		"settingsFile": string(settingsFile),
+	})
 }
