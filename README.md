@@ -18,18 +18,17 @@ Refer [VWO Official Server-side Documentation](https://developers.vwo.com/refere
 1. Install dependencies
 
 ```go
-go get "github.com/decabits/vwo-golang-sdk"
-go get "github.com/decabits/vwo-golang-example-app"
+go get .
 
 ```
 
-2. Update your app with your settings present in `config/vwo.json`
+2. Update your app with your settings present in `config/dev.yaml`
 
-```json
-"accountID": "REPLACE_THIS_WITH_CORRECT_VALUE"
-"SDKKey": "REPLACE_THIS_WITH_CORRECT_VALUE"
-"abCampaignKey": "REPLACE_THIS_WITH_CORRECT_VALUE"
-"abCampaignGoalIdentifeir": "REPLACE_THIS_WITH_CORRECT_VALUE"
+```yaml
+accountID: "REPLACE_THIS_WITH_CORRECT_VALUE"
+SDKKey: "REPLACE_THIS_WITH_CORRECT_VALUE"
+abCampaignKey: "REPLACE_THIS_WITH_CORRECT_VALUE"
+abCampaignGoalIdentifeir: "REPLACE_THIS_WITH_CORRECT_VALUE"
 ```
 
 3. Run application
@@ -52,33 +51,19 @@ import (
 )
 
 // Initialize client
-VWO := vwo.Default(config.GetString("accountID"), config.GetString("SDKKey"), storage)
-
-// Get Settings
-settingsFile = service.SettingsFileManager.GetSettingsFile()
-
-// Get Instance
-// path of the required settings file is passed as an arguement 
-vwoInstance = api.GetInstance(path)
+// storage should be of type schema.UserStorage
+VWO := vwo.Default("accountID", "SDKKey", storage)
 
 // Activate API
-variationName = api.Activate(vwoInstance, campaignKey, userID)
+variationName = api.Activate(VWO, campaignKey, userID)
 
 // GetVariation
 options = {}
-variationName = api.GetVariationName(vwoInstance, campaignKey, userID, options)
+variationName = api.GetVariationName(VWO, campaignKey, userID, options)
 
 // Track API
 options = {}
-isSuccessful = api.TrackWithOptions(vwoInstance, campaignKey, userID, goalIdentifier, options)
-
-// FeatureEnabled API
-options = {}
-isSuccessful = api.IsFeatureEnabled(vwoInstance, campaignKey, userID, options)
-
-// GetFeatureVariableValue API
-options = {}
-variableValue = api.GetFeatureVariableValue(vwoInstance, campaignKey, variableKey, userID, options)
+isSuccessful = api.TrackWithOptions(VWO, campaignKey, userID, goalIdentifier, options)
 
 // Push API
 isSuccessful = api.Push(tagKey, tagValue, userID)
@@ -86,7 +71,57 @@ isSuccessful = api.Push(tagKey, tagValue, userID)
 
 **API usage**
 
-**User Define Logger**
+** User Storage **
+
+```go
+
+import "github.com/decabits/vwo-golang-sdk/schema"
+
+// UserStorage interface
+type UserStorage schema.UserStorage
+
+// UserStorageData struct
+type UserStorageData struct{}
+
+func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
+    
+    //Example code showing how to get userData  from DB
+    userData, ok := userDatas[campaignKey]
+	if ok {
+		for _, userdata := range userData {
+			if userdata.UserID == userID {
+				return userdata
+			}
+		}
+	}
+	return schema.UserData{}
+}
+
+func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
+
+    //Example code showing how to store userData in DB
+    userdata := schema.UserData{
+		UserID:        userID,
+		CampaignKey:   campaignKey,
+		VariationName: variationName,
+	}
+	flag := false
+	userData, ok := userDatas[userdata.CampaignKey]
+	if ok {
+		for _, user := range userData {
+			if user.UserID == userdata.UserID {
+				flag = true
+			}
+		}
+		if !flag {
+			userDatas[userdata.CampaignKey] = append(userDatas[userdata.CampaignKey], userdata)
+		}
+	} else {
+		userDatas[userdata.CampaignKey] = []schema.UserData{
+			userdata,
+		}
+	}
+}
 
 
 ## License
