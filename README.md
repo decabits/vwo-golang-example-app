@@ -47,7 +47,6 @@ import (
 	vwo "github.com/decabits/vwo-golang-sdk"
     "github.com/decabits/vwo-golang-sdk/schema"
     "github.com/decabits/vwo-golang-sdk/api"
-    "github.com/decabits/vwo-golang-sdk/service"
 )
 
 // Initialize client
@@ -71,7 +70,7 @@ isSuccessful = api.Push(tagKey, tagValue, userID)
 
 **API usage**
 
-** User Storage **
+**User Storage**
 
 ```go
 
@@ -79,13 +78,21 @@ import "github.com/decabits/vwo-golang-sdk/schema"
 
 // UserStorage interface
 type UserStorage schema.UserStorage
+/*
+// UserStorage struct
+type UserStorage interface {
+	Get(userID, campaignKey string) UserData
+	Set(string, string, string)
+	Exist() bool
+}
+*/
 
 // UserStorageData struct
 type UserStorageData struct{}
 
 func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
-    
-    //Example code showing how to get userData  from DB
+	
+    //Example code showing how to get userData from DB
     userData, ok := userDatas[campaignKey]
 	if ok {
 		for _, userdata := range userData {
@@ -94,6 +101,14 @@ func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
 			}
 		}
 	}
+	/*
+    // UserData  struct
+    type UserData struct {
+        UserID        string
+        CampaignKey   string
+        VariationName string
+    }
+    */
 	return schema.UserData{}
 }
 
@@ -121,6 +136,12 @@ func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
 			userdata,
 		}
 	}
+}
+
+// Exist function
+func (us *UserStorageData) Exist() bool {
+	// Set the return value true in case there is a user storage else false
+	return true
 }
 ```
 
