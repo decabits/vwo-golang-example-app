@@ -122,8 +122,10 @@ func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
 		}
 	}
 }
+```
 
 
 ## License
 
+[Apache License, Version 2.0](LICENSE)
 
