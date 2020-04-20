@@ -1,24 +1,7 @@
-accountID: "89499"
-SDKKey: "7aeed7f67f5a0b0fbe476c1f086a7038"
-abCampaignKey: "phpab3"
-abCampaignGoalIdentifier: "custom"
-featureRolloutCampaignKey: "php1"
-featureTestCampaignKey: "php2"
-pollTime: 10000
+accountID: ""
+SDKKey: ""
+abCampaignKey: ""
+abCampaignGoalIdentifier: ""
+featureRolloutCampaignKey: ""
+featureTestCampaignKey: ""
 port: ":3000"
-userData:
-  {
-    "hhjjjj":
-      [
-        {
-          "UserID": "Chris",
-          "CampaignKey": "hhjjjj",
-          "VariationName": "Variation-1",
-        },
-        {
-          "UserID": "Bill",
-          "CampaignKey": "hhjjjj",
-          "VariationName": "Control",
-        },
-      ],
-  }
