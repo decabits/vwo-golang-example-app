@@ -5,7 +5,10 @@ import (
 )
 
 // UserStorage interface
-type UserStorage schema.UserStorage
+type UserStorage interface{
+	Get(userID, campaignKey string) schema.UserData
+	Set(userID, campaignKey, variationName string)
+}
 
 // UserStorageData struct
 type UserStorageData struct{}
@@ -79,9 +82,4 @@ func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
 	// This is a part of the above JSON data handling
 	// data, _ := json.Marshal(userDatas)
 	// fmt.Println(string(data))
-}
-
-// Exist function
-func (us *UserStorageData) Exist() bool {
-	return false
 }

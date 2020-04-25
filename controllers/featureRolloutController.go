@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/decabits/vwo-golang-example-app/config"
@@ -32,7 +33,7 @@ func FeatureRolloutController(c *gin.Context) {
 
 	settingsFile, err := json.Marshal(instance.SettingsFile)
 	if err != nil {
-		instance.Logger.Error(err)
+		fmt.Println(err)
 	}
 
 	c.HTML(http.StatusOK, "featureRollout.html", gin.H{

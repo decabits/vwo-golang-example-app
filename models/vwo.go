@@ -1,7 +1,7 @@
 package models
 
 import (
-	"log"
+	"fmt"
 
 	"github.com/decabits/vwo-golang-example-app/config"
 	vwo "github.com/decabits/vwo-golang-sdk"
@@ -15,13 +15,13 @@ type VWO struct {
 // Init ...
 func (v *VWO) Init() {
 	config := config.GetConfig()
-	storage := &UserStorageData{}
-	settingsFile, err := vwo.GetSettingsFile(config.GetString("accountID"), config.GetString("SDKKey"))
-	if err != nil {
-		log.Fatal("Unable to fetch settingsFile: ", err)
-	}
+	// storage := &UserStorageData{}
+	settingsFile := vwo.GetSettingsFile(config.GetString("accountID"), config.GetString("SDKKey"))
 	v.vwoInstance = vwo.VWOInstance{}
-	v.vwoInstance.Launch(config.GetBool("isDevelopmentMode"), settingsFile, storage)
+	err := v.vwoInstance.Launch(config.GetBool("isDevelopmentMode"), settingsFile, nil)
+	if err != nil {
+		fmt.Println("error intialising sdk")
+	}
 }
 
 // GetVWOInstance ...

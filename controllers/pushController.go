@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/decabits/vwo-golang-example-app/models"
@@ -34,7 +35,7 @@ func PushController(c *gin.Context) {
 
 	settingsFile, err := json.Marshal(instance.SettingsFile)
 	if err != nil {
-		instance.Logger.Error(err)
+		fmt.Println(err)
 	}
 
 	c.HTML(http.StatusOK, "push.html", gin.H{
