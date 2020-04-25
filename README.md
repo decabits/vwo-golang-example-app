@@ -49,26 +49,33 @@ import (
     "github.com/decabits/vwo-golang-sdk/api"
 )
 
-// Initialize client
-// storage should be of type schema.UserStorage
-VWO := vwo.Default("accountID", "SDKKey", storage)
+// Get SettingsFile
+settingsFile := vwo.GetSettingsFile("accountID", "SDKKey")
+
+// Get UserStorage 
+storage := &UserStorageData{}
+
+// Initialize VwoInstance
+vwoInstance = vwo.VWOInstance{}
+
+//Create VwoInstance
+vwoInstance.Launch("isDevelopmentMode", settingsFile, storage)
 
 // Activate API
-variationName = api.Activate(VWO, campaignKey, userID)
+variationName = vwoInstance.Activate(VWO, campaignKey, userID)
 
 // GetVariation
-options = {}
-variationName = api.GetVariationName(VWO, campaignKey, userID, options)
+options = schema.Options{}
+variationName = vwoInstance.GetVariationName(VWO, campaignKey, userID, options)
 
 // Track API
-options = {}
-isSuccessful = api.TrackWithOptions(VWO, campaignKey, userID, goalIdentifier, options)
+options = schema.Options{}
+isSuccessful = vwoInstance.TrackWithOptions(VWO, campaignKey, userID, goalIdentifier, options)
 
 // Push API
-isSuccessful = api.Push(tagKey, tagValue, userID)
+isSuccessful = vwoInstance.Push(tagKey, tagValue, userID)
 ```
 
-**API usage**
 
 **User Storage**
 
