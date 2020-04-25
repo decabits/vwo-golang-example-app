@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"net/http"
 	"encoding/json"
+	"net/http"
 
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/gin-gonic/gin"

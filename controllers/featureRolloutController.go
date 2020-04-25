@@ -7,7 +7,6 @@ import (
 	"github.com/decabits/vwo-golang-example-app/config"
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/decabits/vwo-golang-example-app/util"
-	"github.com/decabits/vwo-golang-sdk/api"
 	"github.com/decabits/vwo-golang-sdk/schema"
 	"github.com/gin-gonic/gin"
 )
@@ -29,7 +28,7 @@ func FeatureRolloutController(c *gin.Context) {
 	instance := vwo.GetVWOInstance()
 	options := schema.Options{}
 
-	isEnabled := api.IsFeatureEnabled(instance, campaignKey, userID, options)
+	isEnabled := instance.IsFeatureEnabledWithOptions(campaignKey, userID, options)
 
 	settingsFile, err := json.Marshal(instance.SettingsFile)
 	if err != nil {

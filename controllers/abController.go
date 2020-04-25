@@ -7,7 +7,6 @@ import (
 	"github.com/decabits/vwo-golang-example-app/config"
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/decabits/vwo-golang-example-app/util"
-	"github.com/decabits/vwo-golang-sdk/api"
 	"github.com/decabits/vwo-golang-sdk/schema"
 	"github.com/gin-gonic/gin"
 )
@@ -32,12 +31,12 @@ func ABController(c *gin.Context) {
 	options := schema.Options{}
 
 	isPartOfCampaign := false
-	variationName := api.ActivateWithOptions(instance, campaignKey, userID, options)
+	variationName := instance.ActivateWithOptions(campaignKey, userID, options)
 	if variationName != "" {
 		isPartOfCampaign = true
 	}
 
-	track := api.TrackWithOptions(instance, campaignKey, userID, abCampaigngoalIdentifier, options)
+	track := instance.TrackWithOptions(campaignKey, userID, abCampaigngoalIdentifier, options)
 
 	settingsFile, err := json.Marshal(instance.SettingsFile)
 	if err != nil {

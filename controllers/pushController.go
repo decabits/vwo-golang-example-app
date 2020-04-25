@@ -6,7 +6,6 @@ import (
 
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/decabits/vwo-golang-example-app/util"
-	"github.com/decabits/vwo-golang-sdk/api"
 	"github.com/gin-gonic/gin"
 )
 
@@ -31,7 +30,7 @@ func PushController(c *gin.Context) {
 	vwo.Init()
 	instance := vwo.GetVWOInstance()
 
-	result := api.Push(instance, tagKey, tagValue, userID)
+	result := instance.Push(tagKey, tagValue, userID)
 
 	settingsFile, err := json.Marshal(instance.SettingsFile)
 	if err != nil {

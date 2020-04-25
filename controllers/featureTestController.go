@@ -7,7 +7,6 @@ import (
 	"github.com/decabits/vwo-golang-example-app/config"
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/decabits/vwo-golang-example-app/util"
-	"github.com/decabits/vwo-golang-sdk/api"
 	"github.com/decabits/vwo-golang-sdk/schema"
 	"github.com/gin-gonic/gin"
 )
@@ -37,12 +36,12 @@ func FeatureTestController(c *gin.Context) {
 		doubleVariable = "float2"
 	)
 
-	isEnabled := api.IsFeatureEnabled(instance, campaignKey, userID, options)
+	isEnabled := instance.IsFeatureEnabledWithOptions(campaignKey, userID, options)
 
-	strValue := api.GetFeatureVariableValue(instance, campaignKey, stringVariable, userID, options)
-	intValue := api.GetFeatureVariableValue(instance, campaignKey, intVariable, userID, options)
-	boolValue := api.GetFeatureVariableValue(instance, campaignKey, boolVariable, userID, options)
-	dubValue := api.GetFeatureVariableValue(instance, campaignKey, doubleVariable, userID, options)
+	strValue := instance.GetFeatureVariableValueWithOptions(campaignKey, stringVariable, userID, options)
+	intValue := instance.GetFeatureVariableValueWithOptions(campaignKey, intVariable, userID, options)
+	boolValue := instance.GetFeatureVariableValueWithOptions(campaignKey, boolVariable, userID, options)
+	dubValue := instance.GetFeatureVariableValueWithOptions(campaignKey, doubleVariable, userID, options)
 
 	settingsFile, err := json.Marshal(instance.SettingsFile)
 	if err != nil {
@@ -56,7 +55,7 @@ func FeatureTestController(c *gin.Context) {
 		"featureCampaignGoalIdentifier": config.GetString("abCampaignGoalIdentifier"),
 		"customVariables":               options.CustomVariables,
 		"userID":                        userID,
-		"isUserPartOfFeatureCampaign":  isEnabled,
+		"isUserPartOfFeatureCampaign":   isEnabled,
 		"booleanVariable":               boolValue,
 		"integerVariable":               intValue,
 		"doubleVariable":                dubValue,
