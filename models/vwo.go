@@ -12,7 +12,8 @@ type VWO struct {
 	vwoInstance vwo.VWOInstance
 }
 
-// GetVWOInstance ...
+// GetVWOInstance function initializes the settings file and launches the
+// VWO instance using configuration values and returns the insttance
 func GetVWOInstance() vwo.VWOInstance {
 	config := config.GetConfig()
 	// storage := &UserStorageData{}

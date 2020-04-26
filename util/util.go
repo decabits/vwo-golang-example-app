@@ -4,6 +4,7 @@ import (
 	"math/rand"
 )
 
+// GetRandomUser function returns a random user from the array of pre defined users
 func GetRandomUser() string {
 	var users = []string{
 		"Ashley",

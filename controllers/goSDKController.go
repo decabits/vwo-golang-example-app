@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GoSDKController ...
+// GoSDKController function displayes the settings file
 func GoSDKController(c *gin.Context) {
 	instance := models.GetVWOInstance()
 

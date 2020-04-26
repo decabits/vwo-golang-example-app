@@ -11,7 +11,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// FeatureRolloutController ...
+// FeatureRolloutController function uses the configuration values and VWO instance to check 
+// whether a feature is enabled or not for the given user and displayes the html output
 func FeatureRolloutController(c *gin.Context) {
 	config := config.GetConfig()
 	userID := c.Query("userId")

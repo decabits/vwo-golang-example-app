@@ -6,9 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//HomePage Controller ...
+//HomePage Controller function displayes the homePage html template
 func HomePage(c *gin.Context) {
 	c.HTML(http.StatusOK, "homePage.html", gin.H{
-		// "title": "Main website",
 	})
 }
