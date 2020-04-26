@@ -178,7 +178,7 @@ func main() {
 
 ## Third-party Resources and Credits
 
-Refer [third-party-attributions.txt](third-party-attribution.txt)
+Refer [third-party-attributions.txt](third-party-attributions.txt)
 
 ## License
 
