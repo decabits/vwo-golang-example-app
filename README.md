@@ -176,6 +176,10 @@ func main() {
 }
 ```
 
+## Third-party Resources and Credits
+
+Refer [third-party-attributions.txt](third-party-attribution.txt)
+
 ## License
 
 [Apache License, Version 2.0](LICENSE)
