@@ -2,12 +2,12 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/decabits/vwo-golang-example-app/config"
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/decabits/vwo-golang-example-app/util"
-	"github.com/decabits/vwo-golang-sdk/schema"
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,20 +27,19 @@ func FeatureRolloutController(c *gin.Context) {
 	vwo := models.VWO{}
 	vwo.Init()
 	instance := vwo.GetVWOInstance()
-	options := schema.Options{}
 
-	isEnabled := instance.IsFeatureEnabledWithOptions(campaignKey, userID, options)
+	isEnabled := instance.IsFeatureEnabled(campaignKey, userID, nil)
 
 	settingsFile, err := json.Marshal(instance.SettingsFile)
 	if err != nil {
-		instance.Logger.Error(err)
+		fmt.Println(err)
 	}
 
 	c.HTML(http.StatusOK, "featureRollout.html", gin.H{
 		"campaignType":                        "FEATURE_ROLLOUT",
 		"settingsFile":                        string(settingsFile),
 		"campaifeatureRolloutCampaignKeyType": campaignKey,
-		"customVariables":                     options.CustomVariables,
+		"customVariables":                     nil,
 		"userID":                              userID,
 		"isUserPartOfFeatureRolloutCampaign":  isEnabled,
 	})

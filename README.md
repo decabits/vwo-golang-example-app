@@ -2,16 +2,13 @@
 
 This repository provides a basic demo of how server-side works with VWO Golang SDK.
 
-
 ## Requirements
 
-* Works with Go 1.11 +
-
+- Works with Go 1.11+
 
 ## Documentation
 
 Refer [VWO Official Server-side Documentation](https://developers.vwo.com/reference#server-side-introduction)
-
 
 ## Setup
 
@@ -29,6 +26,7 @@ accountID: "REPLACE_THIS_WITH_CORRECT_VALUE"
 SDKKey: "REPLACE_THIS_WITH_CORRECT_VALUE"
 abCampaignKey: "REPLACE_THIS_WITH_CORRECT_VALUE"
 abCampaignGoalIdentifeir: "REPLACE_THIS_WITH_CORRECT_VALUE"
+isDevelopmentMode: bool
 ```
 
 3. Run application
@@ -37,78 +35,70 @@ abCampaignGoalIdentifeir: "REPLACE_THIS_WITH_CORRECT_VALUE"
 go run main.go dev
 ```
 
-
 ## Basic Usage
 
 **Importing and Instantiation**
 
 ```go
-import (
-	vwo "github.com/decabits/vwo-golang-sdk"
-    "github.com/decabits/vwo-golang-sdk/schema"
-    "github.com/decabits/vwo-golang-sdk/api"
-)
+import vwo "github.com/decabits/vwo-golang-sdk"
 
 // Get SettingsFile
 settingsFile := vwo.GetSettingsFile("accountID", "SDKKey")
 
-// Get UserStorage 
-storage := &UserStorageData{}
-
-// Initialize VwoInstance
+// Declaration of VwoInstance
 vwoInstance = vwo.VWOInstance{}
 
-//Create VwoInstance
-vwoInstance.Launch("isDevelopmentMode", settingsFile, storage)
+// Create VwoInstance and handle error if any
+err := vwoInstance.Launch("isDevelopmentMode", settingsFile, nil, nil)
 
 // Activate API
-variationName = vwoInstance.Activate(VWO, campaignKey, userID)
+variationName = vwoInstance.Activate(campaignKey, userID, nil)
 
 // GetVariation
-options = schema.Options{}
-variationName = vwoInstance.GetVariationName(VWO, campaignKey, userID, options)
+variationName = vwoInstance.GetVariationName(campaignKey, userID, nil)
 
 // Track API
-options = schema.Options{}
-isSuccessful = vwoInstance.TrackWithOptions(VWO, campaignKey, userID, goalIdentifier, options)
+options := make(map[string]interface{})
+options["revenueGoal"] = 12
+isSuccessful = vwoInstance.Track(campaignKey, userID, goalIdentifier, options)
+
+// FeatureEnabled API
+isSuccessful = vwoInstance.IsFeatureEnabled(campaignKey, userID, nil)
+
+
+// GetFeatureVariableValue API
+variableValue = vwoInstance.GetFeatureVariableValue(campaignKey, variableKey, userID, nil)
 
 // Push API
 isSuccessful = vwoInstance.Push(tagKey, tagValue, userID)
 ```
 
-
 **User Storage**
 
 ```go
-
 import "github.com/decabits/vwo-golang-sdk/schema"
 
-// UserStorage interface
-type UserStorage schema.UserStorage
-/*
-// UserStorage struct
-type UserStorage interface {
-	Get(userID, campaignKey string) UserData
-	Set(string, string, string)
-	Exist() bool
+// declare UserStorage interface with the following Get & Set function signature
+type UserStorage interface{
+    Get(userID, campaignKey string) UserData
+    Set(string, string, string)
 }
-*/
 
-// UserStorageData struct
+// declare a UserStorageData struct to implement UserStorage interface
 type UserStorageData struct{}
 
+// Get method to fetch user variation from storage
 func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
-	
-    //Example code showing how to get userData from DB
+    //Example code showing how to get userData  from DB
     userData, ok := userDatas[campaignKey]
-	if ok {
+    if ok {
 		for _, userdata := range userData {
 			if userdata.UserID == userID {
 				return userdata
 			}
 		}
-	}
-	/*
+    }
+    /*
     // UserData  struct
     type UserData struct {
         UserID        string
@@ -119,8 +109,8 @@ func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
 	return schema.UserData{}
 }
 
+// Set method to save user variation to storage
 func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
-
     //Example code showing how to store userData in DB
     userdata := schema.UserData{
 		UserID:        userID,
@@ -145,10 +135,44 @@ func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
 	}
 }
 
-// Exist function
-func (us *UserStorageData) Exist() bool {
-	// Set the return value true in case there is a user storage else false
-	return true
+func main() {
+	settingsFile := vwo.GetSettingsFile("accountID", "SDKKey")
+	// create UserStorageData object
+	storage := &UserStorageData{}
+	v.vwoInstance = vwo.VWOInstance{}
+	err := v.vwoInstance.Launch(config.GetBool("isDevelopmentMode"), settingsFile, storage)
+	if err != nil {
+		fmt.Println("error intialising sdk")
+	}
+}
+
+```
+
+**Custom Logger**
+
+```go
+import vwo "github.com/decabits/vwo-golang-sdk"
+
+// declare Log interface with the following CustomLog function signature
+type Log interface {
+	CustomLog(level, errorMessage string)
+}
+
+// declare a LogS struct to implement Log interface
+type LogS struct{}
+
+// Get function to handle logs
+func (c *LogS) CustomLog(level, errorMessage string) {}
+
+func main() {
+	settingsFile := vwo.GetSettingsFile("accountID", "SDKKey")
+	// create LogS object
+	logger := &LogS{}
+	v.vwoInstance = vwo.VWOInstance{}
+	err := v.vwoInstance.LaunchWithLogger(config.GetBool("isDevelopmentMode"), settingsFile, nil, logger)
+	if err != nil {
+		fmt.Println("error intialising sdk")
+	}
 }
 ```
 
@@ -159,4 +183,3 @@ Refer [third-party-attributions.txt](third-party-attribution.txt)
 ## License
 
 [Apache License, Version 2.0](LICENSE)
-

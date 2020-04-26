@@ -2,12 +2,12 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/decabits/vwo-golang-example-app/config"
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/decabits/vwo-golang-example-app/util"
-	"github.com/decabits/vwo-golang-sdk/schema"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,7 +28,6 @@ func FeatureTestController(c *gin.Context) {
 	vwo := models.VWO{}
 	vwo.Init()
 	instance := vwo.GetVWOInstance()
-	options := schema.Options{}
 
 	var (
 		stringVariable = "string2"
@@ -37,16 +36,16 @@ func FeatureTestController(c *gin.Context) {
 		doubleVariable = "float2"
 	)
 
-	isEnabled := instance.IsFeatureEnabledWithOptions(campaignKey, userID, options)
+	isEnabled := instance.IsFeatureEnabled(campaignKey, userID, nil)
 
-	strValue := instance.GetFeatureVariableValueWithOptions(campaignKey, stringVariable, userID, options)
-	intValue := instance.GetFeatureVariableValueWithOptions(campaignKey, intVariable, userID, options)
-	boolValue := instance.GetFeatureVariableValueWithOptions(campaignKey, boolVariable, userID, options)
-	dubValue := instance.GetFeatureVariableValueWithOptions(campaignKey, doubleVariable, userID, options)
+	strValue := instance.GetFeatureVariableValue(campaignKey, stringVariable, userID, nil)
+	intValue := instance.GetFeatureVariableValue(campaignKey, intVariable, userID, nil)
+	boolValue := instance.GetFeatureVariableValue(campaignKey, boolVariable, userID, nil)
+	dubValue := instance.GetFeatureVariableValue(campaignKey, doubleVariable, userID, nil)
 
 	settingsFile, err := json.Marshal(instance.SettingsFile)
 	if err != nil {
-		instance.Logger.Error(err)
+		fmt.Println(err)
 	}
 
 	c.HTML(http.StatusOK, "featureTest.html", gin.H{
@@ -54,7 +53,7 @@ func FeatureTestController(c *gin.Context) {
 		"settingsFile":                  string(settingsFile),
 		"featureCampaignKey":            campaignKey,
 		"featureCampaignGoalIdentifier": config.GetString("abCampaignGoalIdentifier"),
-		"customVariables":               options.CustomVariables,
+		"customVariables":               nil,
 		"userID":                        userID,
 		"isUserPartOfFeatureCampaign":   isEnabled,
 		"booleanVariable":               boolValue,
