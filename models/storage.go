@@ -1,11 +1,9 @@
 package models
 
-import (
-	"github.com/decabits/vwo-golang-sdk/schema"
-)
+import "github.com/decabits/vwo-golang-sdk/schema"
 
 // UserStorage interface
-type UserStorage interface{
+type UserStorage interface {
 	Get(userID, campaignKey string) schema.UserData
 	Set(userID, campaignKey, variationName string)
 }

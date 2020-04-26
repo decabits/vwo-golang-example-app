@@ -18,7 +18,7 @@ func (v *VWO) Init() {
 	// storage := &UserStorageData{}
 	settingsFile := vwo.GetSettingsFile(config.GetString("accountID"), config.GetString("SDKKey"))
 	v.vwoInstance = vwo.VWOInstance{}
-	err := v.vwoInstance.Launch(config.GetBool("isDevelopmentMode"), settingsFile, nil)
+	err := v.vwoInstance.Launch(config.GetBool("isDevelopmentMode"), settingsFile, nil, nil)
 	if err != nil {
 		fmt.Println("error intialising sdk")
 	}

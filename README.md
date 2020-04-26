@@ -40,11 +40,7 @@ go run main.go dev
 **Importing and Instantiation**
 
 ```go
-import (
-	vwo "github.com/decabits/vwo-golang-sdk"
-    "github.com/decabits/vwo-golang-sdk/schema"
-    "github.com/decabits/vwo-golang-sdk/api"
-)
+import vwo "github.com/decabits/vwo-golang-sdk"
 
 // Get SettingsFile
 settingsFile := vwo.GetSettingsFile("accountID", "SDKKey")
@@ -53,17 +49,25 @@ settingsFile := vwo.GetSettingsFile("accountID", "SDKKey")
 vwoInstance = vwo.VWOInstance{}
 
 // Create VwoInstance and handle error if any
-err := vwoInstance.Launch("isDevelopmentMode", settingsFile, nil)
+err := vwoInstance.Launch("isDevelopmentMode", settingsFile, nil, nil)
 
 // Activate API
-variationName = vwoInstance.Activate(VWO, campaignKey, userID)
+variationName = vwoInstance.Activate(campaignKey, userID, nil)
 
 // GetVariation
-variationName = vwoInstance.GetVariationName(VWO, campaignKey, userID)
+variationName = vwoInstance.GetVariationName(campaignKey, userID, nil)
 
 // Track API
-options = schema.Options{}
-isSuccessful = vwoInstance.TrackWithOptions(VWO, campaignKey, userID, goalIdentifier, options)
+options := make(map[string]interface{})
+options["revenueGoal"] = 12
+isSuccessful = vwoInstance.Track(campaignKey, userID, goalIdentifier, options)
+
+// FeatureEnabled API
+isSuccessful = vwoInstance.IsFeatureEnabled(campaignKey, userID, nil)
+
+
+// GetFeatureVariableValue API
+variableValue = vwoInstance.GetFeatureVariableValue(campaignKey, variableKey, userID, nil)
 
 // Push API
 isSuccessful = vwoInstance.Push(tagKey, tagValue, userID)

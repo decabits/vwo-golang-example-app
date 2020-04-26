@@ -8,7 +8,6 @@ import (
 	"github.com/decabits/vwo-golang-example-app/config"
 	"github.com/decabits/vwo-golang-example-app/models"
 	"github.com/decabits/vwo-golang-example-app/util"
-	"github.com/decabits/vwo-golang-sdk/schema"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,20 +23,18 @@ func ABController(c *gin.Context) {
 		campaignKey = config.GetString("abCampaignKey")
 	}
 	abCampaigngoalIdentifier := config.GetString("abCampaignGoalIdentifier")
-	// abCampaigngoalIdentifier = "custom"
 
 	vwo := models.VWO{}
 	vwo.Init()
 	instance := vwo.GetVWOInstance()
-	options := schema.Options{}
 
 	isPartOfCampaign := false
-	variationName := instance.ActivateWithOptions(campaignKey, userID, options)
+	variationName := instance.Activate(campaignKey, userID, nil)
 	if variationName != "" {
 		isPartOfCampaign = true
 	}
 
-	track := instance.TrackWithOptions(campaignKey, userID, abCampaigngoalIdentifier, options)
+	track := instance.Track(campaignKey, userID, abCampaigngoalIdentifier, nil)
 
 	settingsFile, err := json.Marshal(instance.SettingsFile)
 	if err != nil {
@@ -58,7 +55,7 @@ func ABController(c *gin.Context) {
 		"settingsFile":             string(settingsFile),
 		"abCampaignKey":            campaignKey,
 		"abCampaignGoalIdentifier": abCampaigngoalIdentifier,
-		"customVariables":          options.CustomVariables,
+		"customVariables":          nil,
 		"userID":                   userID,
 		"isPartOfCampaign":         isPartOfCampaign,
 		"variationName":            variationName,

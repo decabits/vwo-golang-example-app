@@ -22,7 +22,6 @@ func PushController(c *gin.Context) {
 	if tagKey == "" {
 		tagKey = "tempKey"
 	}
-
 	if tagValue == "" {
 		tagValue = "tempVal"
 	}
