@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GoSDKController ...
+// GoSDKController function displayes the settings file
 func GoSDKController(c *gin.Context) {
 	vwo := models.VWO{}
 	vwo.Init()

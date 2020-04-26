@@ -4,9 +4,6 @@ import (
 	"github.com/decabits/vwo-golang-sdk/schema"
 )
 
-// UserStorage interface
-type UserStorage schema.UserStorage
-
 // UserStorageData struct
 type UserStorageData struct{}
 

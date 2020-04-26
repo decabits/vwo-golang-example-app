@@ -11,7 +11,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ABController ...
+// ABController function uses the configuration values and VWO instance to show usage of Activate API 
+// along with tracking and displayes the html output
 func ABController(c *gin.Context) {
 	config := config.GetConfig()
 	userID := c.Query("userId")

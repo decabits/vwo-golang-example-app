@@ -152,6 +152,9 @@ func (us *UserStorageData) Exist() bool {
 }
 ```
 
+## Third-party Resources and Credits
+
+Refer [third-party-attributions.txt](third-party-attribution.txt)
 
 ## License
 

@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// PushController ...
+// PushController function gets the configuration values and VWO instance to check the Push API and displayes the html output
 func PushController(c *gin.Context) {
 	userID := c.Query("userId")
 	tagKey := c.Query("tagKey")
