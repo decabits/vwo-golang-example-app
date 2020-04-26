@@ -4,7 +4,7 @@ This repository provides a basic demo of how server-side works with VWO Golang S
 
 ## Requirements
 
-- Works with Go 1.11+
+- Works with Go 1.1x
 
 ## Documentation
 

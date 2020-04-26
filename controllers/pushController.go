@@ -26,9 +26,7 @@ func PushController(c *gin.Context) {
 		tagValue = "tempVal"
 	}
 
-	vwo := models.VWO{}
-	vwo.Init()
-	instance := vwo.GetVWOInstance()
+	instance := models.GetVWOInstance()
 
 	result := instance.Push(tagKey, tagValue, userID)
 

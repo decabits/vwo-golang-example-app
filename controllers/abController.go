@@ -24,9 +24,7 @@ func ABController(c *gin.Context) {
 	}
 	abCampaigngoalIdentifier := config.GetString("abCampaignGoalIdentifier")
 
-	vwo := models.VWO{}
-	vwo.Init()
-	instance := vwo.GetVWOInstance()
+	instance := models.GetVWOInstance()
 
 	isPartOfCampaign := false
 	variationName := instance.Activate(campaignKey, userID, nil)

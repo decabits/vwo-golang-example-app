@@ -11,9 +11,7 @@ import (
 
 // GoSDKController ...
 func GoSDKController(c *gin.Context) {
-	vwo := models.VWO{}
-	vwo.Init()
-	instance := vwo.GetVWOInstance()
+	instance := models.GetVWOInstance()
 
 	settingsFile, err := json.Marshal(instance.SettingsFile)
 	if err != nil {

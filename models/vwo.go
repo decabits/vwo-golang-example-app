@@ -12,19 +12,15 @@ type VWO struct {
 	vwoInstance vwo.VWOInstance
 }
 
-// Init ...
-func (v *VWO) Init() {
+// GetVWOInstance ...
+func GetVWOInstance() vwo.VWOInstance {
 	config := config.GetConfig()
 	// storage := &UserStorageData{}
 	settingsFile := vwo.GetSettingsFile(config.GetString("accountID"), config.GetString("SDKKey"))
-	v.vwoInstance = vwo.VWOInstance{}
-	err := v.vwoInstance.Launch(config.GetBool("isDevelopmentMode"), settingsFile, nil, nil)
+	instance := vwo.VWOInstance{}
+	err := instance.Launch(config.GetBool("isDevelopmentMode"), settingsFile, nil, nil)
 	if err != nil {
 		fmt.Println("error intialising sdk")
 	}
-}
-
-// GetVWOInstance ...
-func (v *VWO) GetVWOInstance() vwo.VWOInstance {
-	return v.vwoInstance
+	return instance
 }
