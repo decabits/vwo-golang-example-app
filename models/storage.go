@@ -1,6 +1,6 @@
 package models
 
-import "github.com/decabits/vwo-golang-sdk/schema"
+import "github.com/decabits/vwo-golang-sdk/pkg/schema"
 
 // UserStorage interface
 type UserStorage interface {

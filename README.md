@@ -41,15 +41,22 @@ go run main.go dev
 
 ```go
 import vwo "github.com/decabits/vwo-golang-sdk"
+import "github.com/decabits/vwo-golang-sdk/pkg/api"
 
 // Get SettingsFile
 settingsFile := vwo.GetSettingsFile("accountID", "SDKKey")
 
-// Declaration of VwoInstance
-vwoInstance = vwo.VWOInstance{}
+// Default instance of VwoInstance
+instance, err := vwo.Init(settingsFile)
+if err != nil {
+	//handle err
+}
 
-// Create VwoInstance and handle error if any
-err := vwoInstance.Launch("isDevelopmentMode", settingsFile, nil, nil)
+// Instance with custom options
+instance, err := vwo.Init(settingsFile, api.WithDevelopmentMode())
+if err != nil {
+	//handle err
+}
 
 // Activate API
 variationName = vwoInstance.Activate(campaignKey, userID, nil)
@@ -76,7 +83,9 @@ isSuccessful = vwoInstance.Push(tagKey, tagValue, userID)
 **User Storage**
 
 ```go
-import "github.com/decabits/vwo-golang-sdk/schema"
+import vwo "github.com/decabits/vwo-golang-sdk/"
+import "github.com/decabits/vwo-golang-sdk/pkg/api"
+import "github.com/decabits/vwo-golang-sdk/pkg/schema"
 
 // declare UserStorage interface with the following Get & Set function signature
 type UserStorage interface{
@@ -139,10 +148,10 @@ func main() {
 	settingsFile := vwo.GetSettingsFile("accountID", "SDKKey")
 	// create UserStorageData object
 	storage := &UserStorageData{}
-	v.vwoInstance = vwo.VWOInstance{}
-	err := v.vwoInstance.Launch(config.GetBool("isDevelopmentMode"), settingsFile, storage)
+
+	instance, err := vwo.Init(settingsFile, api.WithStorage(storage))
 	if err != nil {
-		fmt.Println("error intialising sdk")
+		//handle err
 	}
 }
 
@@ -152,6 +161,7 @@ func main() {
 
 ```go
 import vwo "github.com/decabits/vwo-golang-sdk"
+import "github.com/decabits/vwo-golang-sdk/pkg/api"
 
 // declare Log interface with the following CustomLog function signature
 type Log interface {
@@ -168,10 +178,10 @@ func main() {
 	settingsFile := vwo.GetSettingsFile("accountID", "SDKKey")
 	// create LogS object
 	logger := &LogS{}
-	v.vwoInstance = vwo.VWOInstance{}
-	err := v.vwoInstance.LaunchWithLogger(config.GetBool("isDevelopmentMode"), settingsFile, nil, logger)
+
+	instance, err := vwo.Init(settingsFile, api.WithLogger(logger))
 	if err != nil {
-		fmt.Println("error intialising sdk")
+		//handle err
 	}
 }
 ```
