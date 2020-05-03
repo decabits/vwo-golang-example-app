@@ -1,9 +1,8 @@
-accountID: "89499"
-SDKKey: "7aeed7f67f5a0b0fbe476c1f086a7038"
+accountID: ""
+SDKKey: ""
 isDevelopmentMode: true
-abCampaignKey: "phpab3"
-abCampaignGoalIdentifier: "custom"
-featureRolloutCampaignKey: "php1"
-featureTestCampaignKey: "php2"
-pollTime: 10000
+abCampaignKey: ""
+abCampaignGoalIdentifier: ""
+featureRolloutCampaignKey: ""
+featureTestCampaignKey: ""
 port: ":3000"
