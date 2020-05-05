@@ -46,7 +46,7 @@ import "github.com/decabits/vwo-golang-sdk/pkg/api"
 // Get SettingsFile
 settingsFile := vwo.GetSettingsFile("accountID", "SDKKey")
 
-// Default instance of VwoInstance
+// Default instance of vwoInstance
 instance, err := vwo.Init(settingsFile)
 if err != nil {
 	//handle err
@@ -59,25 +59,33 @@ if err != nil {
 }
 
 // Activate API
-variationName = vwoInstance.Activate(campaignKey, userID, nil)
+// With Custom Variables
+options := make(map[string]interface{})
+options["customVariables"] = map[string]interface{}{"a": "x"}
+options["variationTargetingVariables"] = map[string]interface{}{}
+options["revenueGoal"] = 12
+variationName = vwoInstance.Activate(campaignKey, userID, options)
+
+//Without Custom Variables
+variationName = instance.Activate(campaignKey, userID, nil)
 
 // GetVariation
-variationName = vwoInstance.GetVariationName(campaignKey, userID, nil)
+variationName = instance.GetVariationName(campaignKey, userID, nil)
 
 // Track API
 options := make(map[string]interface{})
 options["revenueGoal"] = 12
-isSuccessful = vwoInstance.Track(campaignKey, userID, goalIdentifier, options)
+isSuccessful = instance.Track(campaignKey, userID, goalIdentifier, options)
 
 // FeatureEnabled API
-isSuccessful = vwoInstance.IsFeatureEnabled(campaignKey, userID, nil)
+isSuccessful = instance.IsFeatureEnabled(campaignKey, userID, nil)
 
 
 // GetFeatureVariableValue API
-variableValue = vwoInstance.GetFeatureVariableValue(campaignKey, variableKey, userID, nil)
+variableValue = instance.GetFeatureVariableValue(campaignKey, variableKey, userID, nil)
 
 // Push API
-isSuccessful = vwoInstance.Push(tagKey, tagValue, userID)
+isSuccessful = instance.Push(tagKey, tagValue, userID)
 ```
 
 **User Storage**
