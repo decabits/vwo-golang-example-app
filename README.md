@@ -66,7 +66,7 @@ options["variationTargetingVariables"] = map[string]interface{}{}
 options["revenueGoal"] = 12
 variationName = vwoInstance.Activate(campaignKey, userID, options)
 
-//Without Custom Variables
+// Without Custom Variables
 variationName = instance.Activate(campaignKey, userID, nil)
 
 // GetVariation
