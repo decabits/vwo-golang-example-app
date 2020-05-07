@@ -12,7 +12,20 @@ import (
 // VWO instance using configuration values and returns the insttance
 func GetVWOInstance() *api.VWOInstance {
 	config := config.GetConfig()
-	// storage := &UserStorageData{}
+
+	//User Storage
+	//storage := &UserStorageData{}
+
+	//Custom Logger (Google Logger)
+	/*
+	logs := logger.Init(constants.SDKName, true, false, ioutil.Discard)
+	logger.SetFlags(log.LstdFlags)
+	defer logger.Close()
+	*/
+
+	//Instance with userStorage and customLogger with developmentMode as true
+	//instance, err := vwo.Launch(settingsFile, api.WithDevelopmentMode(), api.WithUserStorage(storage), api.WithCustomLogger(logs))
+
 	settingsFile := vwo.GetSettingsFile(config.GetString("accountID"), config.GetString("SDKKey"))
 	instance, err := vwo.Launch(settingsFile, api.WithDevelopmentMode())
 	if err != nil {

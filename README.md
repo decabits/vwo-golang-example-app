@@ -46,38 +46,46 @@ import "github.com/decabits/vwo-golang-sdk/pkg/api"
 // Get SettingsFile
 settingsFile := vwo.GetSettingsFile("accountID", "SDKKey")
 
-// Default instance of VwoInstance
-instance, err := vwo.Init(settingsFile)
+// Default instance of vwoInstance
+instance, err := vwo.Launch(settingsFile)
 if err != nil {
 	//handle err
 }
 
 // Instance with custom options
-instance, err := vwo.Init(settingsFile, api.WithDevelopmentMode())
+instance, err := vwo.Launch(settingsFile, api.WithDevelopmentMode())
 if err != nil {
 	//handle err
 }
 
 // Activate API
-variationName = vwoInstance.Activate(campaignKey, userID, nil)
+// With Custom Variables
+options := make(map[string]interface{})
+options["customVariables"] = map[string]interface{}{"a": "x"}
+options["variationTargetingVariables"] = map[string]interface{}{}
+options["revenueGoal"] = 12
+variationName = vwoInstance.Activate(campaignKey, userID, options)
+
+//Without Custom Variables
+variationName = instance.Activate(campaignKey, userID, nil)
 
 // GetVariation
-variationName = vwoInstance.GetVariationName(campaignKey, userID, nil)
+variationName = instance.GetVariationName(campaignKey, userID, nil)
 
 // Track API
 options := make(map[string]interface{})
 options["revenueGoal"] = 12
-isSuccessful = vwoInstance.Track(campaignKey, userID, goalIdentifier, options)
+isSuccessful = instance.Track(campaignKey, userID, goalIdentifier, options)
 
 // FeatureEnabled API
-isSuccessful = vwoInstance.IsFeatureEnabled(campaignKey, userID, nil)
+isSuccessful = instance.IsFeatureEnabled(campaignKey, userID, nil)
 
 
 // GetFeatureVariableValue API
-variableValue = vwoInstance.GetFeatureVariableValue(campaignKey, variableKey, userID, nil)
+variableValue = instance.GetFeatureVariableValue(campaignKey, variableKey, userID, nil)
 
 // Push API
-isSuccessful = vwoInstance.Push(tagKey, tagValue, userID)
+isSuccessful = instance.Push(tagKey, tagValue, userID)
 ```
 
 **User Storage**
@@ -149,7 +157,7 @@ func main() {
 	// create UserStorageData object
 	storage := &UserStorageData{}
 
-	instance, err := vwo.Init(settingsFile, api.WithStorage(storage))
+	instance, err := vwo.Launch(settingsFile, api.WithUserStorage(storage))
 	if err != nil {
 		//handle err
 	}
@@ -179,7 +187,7 @@ func main() {
 	// create LogS object
 	logger := &LogS{}
 
-	instance, err := vwo.Init(settingsFile, api.WithLogger(logger))
+	instance, err := vwo.Launch(settingsFile, api.WithCustomLogger(logger))
 	if err != nil {
 		//handle err
 	}
