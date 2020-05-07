@@ -47,13 +47,13 @@ import "github.com/decabits/vwo-golang-sdk/pkg/api"
 settingsFile := vwo.GetSettingsFile("accountID", "SDKKey")
 
 // Default instance of vwoInstance
-instance, err := vwo.Init(settingsFile)
+instance, err := vwo.Launch(settingsFile)
 if err != nil {
 	//handle err
 }
 
 // Instance with custom options
-instance, err := vwo.Init(settingsFile, api.WithDevelopmentMode())
+instance, err := vwo.Launch(settingsFile, api.WithDevelopmentMode())
 if err != nil {
 	//handle err
 }
@@ -66,7 +66,7 @@ options["variationTargetingVariables"] = map[string]interface{}{}
 options["revenueGoal"] = 12
 variationName = vwoInstance.Activate(campaignKey, userID, options)
 
-//Without Custom Variables
+// Without Custom Variables
 variationName = instance.Activate(campaignKey, userID, nil)
 
 // GetVariation
@@ -157,7 +157,7 @@ func main() {
 	// create UserStorageData object
 	storage := &UserStorageData{}
 
-	instance, err := vwo.Init(settingsFile, api.WithStorage(storage))
+	instance, err := vwo.Launch(settingsFile, api.WithStorage(storage))
 	if err != nil {
 		//handle err
 	}
@@ -187,7 +187,7 @@ func main() {
 	// create LogS object
 	logger := &LogS{}
 
-	instance, err := vwo.Init(settingsFile, api.WithLogger(logger))
+	instance, err := vwo.Launch(settingsFile, api.WithLogger(logger))
 	if err != nil {
 		//handle err
 	}
