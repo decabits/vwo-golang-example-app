@@ -14,9 +14,10 @@ func GetVWOInstance() *api.VWOInstance {
 	config := config.GetConfig()
 	// storage := &UserStorageData{}
 	settingsFile := vwo.GetSettingsFile(config.GetString("accountID"), config.GetString("SDKKey"))
-	instance, err := vwo.Init(settingsFile, api.WithDevelopmentMode())
+	instance, err := vwo.Launch(settingsFile, api.WithDevelopmentMode())
 	if err != nil {
 		fmt.Println("error intialising sdk")
 	}
+	vwo.SetLogLevel(3)
 	return instance
 }
