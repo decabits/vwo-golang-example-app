@@ -20,7 +20,7 @@ func GetVWOInstance() *api.VWOInstance {
 	// logs := &LogS{}
 
 	// Instance with userStorage and customLogger with developmentMode as true
-	// instance, err := vwo.Launch(settingsFile, api.WithDevelopmentMode(), api.WithUserStorage(storage), api.WithCustomLogger(logs))
+	// instance, err := vwo.Launch(settingsFile, api.WithDevelopmentMode(), api.WithStorage(storage), api.WithLogger(logs))
 
 	settingsFile := vwo.GetSettingsFile(config.GetString("accountID"), config.GetString("SDKKey"))
 	instance, err := vwo.Launch(settingsFile, api.WithDevelopmentMode())
