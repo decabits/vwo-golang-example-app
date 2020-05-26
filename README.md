@@ -16,6 +16,7 @@ Refer [VWO Official Server-side Documentation](https://developers.vwo.com/refere
 
 ```go
 go get .
+go get -u github.com/cosmtrek/air
 
 ```
 
@@ -32,7 +33,7 @@ isDevelopmentMode: bool
 3. Run application
 
 ```go
-go run main.go dev
+air
 ```
 
 ## Basic Usage
