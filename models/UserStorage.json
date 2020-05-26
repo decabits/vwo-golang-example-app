@@ -1,0 +1,41 @@
+{
+ "abc": [
+  {
+   "UserID": "user1",
+   "CampaignKey": "abc",
+   "VariationName": "Control"
+  },
+  {
+   "UserID": "user2",
+   "CampaignKey": "abc",
+   "VariationName": "Variation-1"
+  }
+ ],
+ "hhjjjj": [
+  {
+   "UserID": "Robert",
+   "CampaignKey": "hhjjjj",
+   "VariationName": "Control"
+  },
+  {
+   "UserID": "Harry",
+   "CampaignKey": "hhjjjj",
+   "VariationName": "Control"
+  },
+  {
+   "UserID": "Varun",
+   "CampaignKey": "hhjjjj",
+   "VariationName": "Variation-4"
+  },
+  {
+   "UserID": "Bill",
+   "CampaignKey": "hhjjjj",
+   "VariationName": "Control"
+  },
+  {
+   "UserID": "Queen",
+   "CampaignKey": "hhjjjj",
+   "VariationName": "Variation-1"
+  }
+ ]
+}
