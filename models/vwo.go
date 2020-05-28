@@ -14,7 +14,7 @@ func GetVWOInstance() *api.VWOInstance {
 	config := config.GetConfig()
 
 	// User Storage
-	storage := &UserStorageData{}
+	// storage := &UserStorageData{}
 
 	// Custom Logger (Google Logger)
 	// logs := &LogS{}
@@ -23,7 +23,7 @@ func GetVWOInstance() *api.VWOInstance {
 	// instance, err := vwo.Launch(settingsFile, api.WithDevelopmentMode(), api.WithStorage(storage), api.WithLogger(logs))
 
 	settingsFile := vwo.GetSettingsFile(config.GetString("accountID"), config.GetString("SDKKey"))
-	instance, err := vwo.Launch(settingsFile, api.WithDevelopmentMode(), api.WithStorage(storage))
+	instance, err := vwo.Launch(settingsFile, api.WithDevelopmentMode())
 	if err != nil {
 		fmt.Println("error intialising sdk")
 	}
