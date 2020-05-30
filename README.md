@@ -17,7 +17,6 @@ Refer [VWO Official Server-side Documentation](https://developers.vwo.com/refere
 ```go
 go get .
 go get -u github.com/cosmtrek/air
-
 ```
 
 2. Update your app with your settings present in `config/dev.yaml`
@@ -32,7 +31,7 @@ isDevelopmentMode: bool
 
 3. Run application
 
-```go
+```shell
 air
 ```
 
