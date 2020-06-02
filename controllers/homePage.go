@@ -8,6 +8,6 @@ import (
 
 //HomePage Controller function displayes the homePage html template
 func HomePage(c *gin.Context) {
-	c.HTML(http.StatusOK, "homePage.html", gin.H{
+	c.HTML(http.StatusOK, "homepage.html", gin.H{
 	})
 }

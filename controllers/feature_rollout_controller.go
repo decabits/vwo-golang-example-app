@@ -33,7 +33,7 @@ func FeatureRolloutController(c *gin.Context) {
 		fmt.Println(err)
 	}
 
-	c.HTML(http.StatusOK, "featureRollout.html", gin.H{
+	c.HTML(http.StatusOK, "feature_rollout.html", gin.H{
 		"campaignType":                        "FEATURE_ROLLOUT",
 		"settingsFile":                        string(settingsFile),
 		"campaifeatureRolloutCampaignKeyType": campaignKey,

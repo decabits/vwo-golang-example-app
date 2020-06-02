@@ -29,6 +29,7 @@ func ABController(c *gin.Context) {
 
 	options := make(map[string]interface{})
 	options["revenueValue"] = 12
+	options["customVariables"] = map[string]interface{}{"price": "€200"}
 
 	isPartOfCampaign := false
 	variationName := instance.Activate(campaignKey, userID, options)
