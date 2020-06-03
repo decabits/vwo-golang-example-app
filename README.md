@@ -194,6 +194,21 @@ func main() {
 }
 ```
 
+**Set log level**
+
+```go
+import vwo "github.com/decabits/vwo-golang-sdk/"
+
+vwo.SetLogLevel(3)
+```
+
+Levels
+
+[0] Errors  
+[1] Warnings and Errors  
+[2] Info, Warnings and Errors  
+[3] Debugs, Info, Warnings and Errors
+
 ## Third-party Resources and Credits
 
 Refer [third-party-attributions.txt](third-party-attributions.txt)
