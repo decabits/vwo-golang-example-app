@@ -18,7 +18,7 @@ func GoSDKController(c *gin.Context) {
 		fmt.Println(err)
 	}
 
-	c.HTML(http.StatusOK, "goSDK.html", gin.H{
+	c.HTML(http.StatusOK, "go_SDK.html", gin.H{
 		"settingsFile": string(settingsFile),
 	})
 }

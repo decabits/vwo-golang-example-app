@@ -27,13 +27,17 @@ func ABController(c *gin.Context) {
 
 	instance := models.GetVWOInstance()
 
+	options := make(map[string]interface{})
+	options["revenueValue"] = 12
+	options["customVariables"] = map[string]interface{}{"price": "€200"}
+
 	isPartOfCampaign := false
-	variationName := instance.Activate(campaignKey, userID, nil)
+	variationName := instance.Activate(campaignKey, userID, options)
 	if variationName != "" {
 		isPartOfCampaign = true
 	}
 
-	track := instance.Track(campaignKey, userID, abCampaigngoalIdentifier, nil)
+	track := instance.Track(campaignKey, userID, abCampaigngoalIdentifier, options)
 
 	settingsFile, err := json.Marshal(instance.SettingsFile)
 	if err != nil {

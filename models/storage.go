@@ -1,6 +1,14 @@
 package models
 
-import "github.com/decabits/vwo-golang-sdk/pkg/schema"
+//uncomment the commented imports to use UserStorage
+import (
+	// "encoding/json"
+	// "fmt"
+	// "io/ioutil"
+	// "path/filepath"
+
+	"github.com/decabits/vwo-golang-sdk/pkg/schema"
+)
 
 // UserStorage interface
 type UserStorage interface {
@@ -11,29 +19,31 @@ type UserStorage interface {
 // UserStorageData struct
 type UserStorageData struct{}
 
-// data is an example of how data is stored
-var data = `{
-    "abc": [{
-            "UserID": "user1",
-            "CampaignKey": "abc",
-            "VariationName": "Control"
-        },
-        {
-            "UserID": "user2",
-            "CampaignKey": "abc",
-            "VariationName": "Variation-1"
-        }
-    ]
-}`
+//Create a UserStorage.json file in models directory to use it for Get and Set
+// path of example JSON user storage
+var path = "./models/UserStorage.json"
 
 // Get function is used to get the data from user storage
 func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
 	var userDatas map[string][]schema.UserData
+
 	// Conect your database here to fetch the current data
-	// Uncomment the below part to user JSON as data base
-	// if err := json.Unmarshal([]byte(data), &userDatas); err != nil {
-	// 	fmt.Print("Could not unmarshall")
+	// Uncomment the below part (Lines 45-57) to user JSON as data base
+
+	// absPath, err := filepath.Abs(path)
+	// if err != nil {
+	// 	fmt.Println("Could not make absolute path: ", err)
 	// }
+
+	// file, err := ioutil.ReadFile(absPath)
+	// if err != nil {
+	// 	fmt.Println("Could not read userStorage: ", err)
+	// }
+
+	// if err = json.Unmarshal(file, &userDatas); err != nil {
+	// 	fmt.Println("Could not unmarshall: ", err)
+	// }
+
 	if len(userDatas) == 0 {
 		return schema.UserData{}
 	}
@@ -51,16 +61,30 @@ func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
 // Set function
 func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
 	var userDatas map[string][]schema.UserData
+
 	// Conect your database here to insert the value
-	// Uncomment the below part to user JSON as data base
-	// if err := json.Unmarshal([]byte(data), &userDatas); err != nil {
-	// 	fmt.Print("Could not unmarshall")
+	// Uncomment the below part (Lines 78-90) to user JSON as data base
+
+	// absPath, err := filepath.Abs(path)
+	// if err != nil {
+	// 	fmt.Println("Could not make absolute path: ", err)
 	// }
+
+	// file, err := ioutil.ReadFile(absPath)
+	// if err != nil {
+	// 	fmt.Println("Could not read userStorage: ", err)
+	// }
+
+	// if err = json.Unmarshal(file, &userDatas); err != nil {
+	// 	fmt.Println("Could not unmarshall: ", err)
+	// }
+
 	userdata := schema.UserData{
 		UserID:        userID,
 		CampaignKey:   campaignKey,
 		VariationName: variationName,
 	}
+
 	flag := false
 	userData, ok := userDatas[userdata.CampaignKey]
 	if ok {
@@ -78,6 +102,12 @@ func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
 		}
 	}
 	// This is a part of the above JSON data handling
-	// data, _ := json.Marshal(userDatas)
-	// fmt.Println(string(data))
+	// data, err := json.MarshalIndent(userDatas, "", " ")
+	// if err != nil {
+	// 	fmt.Println("Could not marshall: ", err)
+	// }
+	// err = ioutil.WriteFile(absPath, data, 0744)
+	// if err != nil {
+	// 	fmt.Println("Could not write userStorage: ", err)
+	// }
 }

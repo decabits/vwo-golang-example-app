@@ -16,7 +16,7 @@ Refer [VWO Official Server-side Documentation](https://developers.vwo.com/refere
 
 ```go
 go get .
-
+go get -u github.com/cosmtrek/air
 ```
 
 2. Update your app with your settings present in `config/dev.yaml`
@@ -31,8 +31,8 @@ isDevelopmentMode: bool
 
 3. Run application
 
-```go
-go run main.go dev
+```shell
+air
 ```
 
 ## Basic Usage
@@ -63,7 +63,7 @@ if err != nil {
 options := make(map[string]interface{})
 options["customVariables"] = map[string]interface{}{"a": "x"}
 options["variationTargetingVariables"] = map[string]interface{}{}
-options["revenueGoal"] = 12
+options["revenueValue"] = 12
 variationName = vwoInstance.Activate(campaignKey, userID, options)
 
 // Without Custom Variables
@@ -74,7 +74,7 @@ variationName = instance.GetVariationName(campaignKey, userID, nil)
 
 // Track API
 options := make(map[string]interface{})
-options["revenueGoal"] = 12
+options["revenueValue"] = 12
 isSuccessful = instance.Track(campaignKey, userID, goalIdentifier, options)
 
 // FeatureEnabled API

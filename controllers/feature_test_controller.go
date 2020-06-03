@@ -46,7 +46,7 @@ func FeatureTestController(c *gin.Context) {
 		fmt.Println(err)
 	}
 
-	c.HTML(http.StatusOK, "featureTest.html", gin.H{
+	c.HTML(http.StatusOK, "feature_test.html", gin.H{
 		"campaignType":                  "FEATURE_TEST",
 		"settingsFile":                  string(settingsFile),
 		"featureCampaignKey":            campaignKey,
