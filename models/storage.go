@@ -13,7 +13,7 @@ import (
 // UserStorage interface
 type UserStorage interface {
 	Get(userID, campaignKey string) schema.UserData
-	Set(userID, campaignKey, variationName string)
+	Set(userID, campaignKey, variationName, goalIdentifier string)
 }
 
 // UserStorageData struct
@@ -59,7 +59,7 @@ func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
 }
 
 // Set function
-func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
+func (us *UserStorageData) Set(userID, campaignKey, variationName, goalIdentifier string) {
 	var userDatas map[string][]schema.UserData
 
 	// Conect your database here to insert the value
@@ -83,6 +83,7 @@ func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
 		UserID:        userID,
 		CampaignKey:   campaignKey,
 		VariationName: variationName,
+		GoalIdentifier: goalIdentifier,
 	}
 
 	flag := false
@@ -95,13 +96,22 @@ func (us *UserStorageData) Set(userID, campaignKey, variationName string) {
 		}
 		if !flag {
 			userDatas[userdata.CampaignKey] = append(userDatas[userdata.CampaignKey], userdata)
+		} else {
+			for i, user := range userData {
+				if user.UserID == userdata.UserID && user.CampaignKey == userdata.CampaignKey {
+					userData[i].VariationName = userdata.VariationName
+					userData[i].GoalIdentifier = userdata.GoalIdentifier
+				}
+			}
 		}
 	} else {
 		userDatas[userdata.CampaignKey] = []schema.UserData{
 			userdata,
 		}
 	}
+
 	// This is a part of the above JSON data handling
+
 	// data, err := json.MarshalIndent(userDatas, "", " ")
 	// if err != nil {
 	// 	fmt.Println("Could not marshall: ", err)

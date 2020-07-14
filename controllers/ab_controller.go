@@ -28,8 +28,9 @@ func ABController(c *gin.Context) {
 	instance := models.GetVWOInstance()
 
 	options := make(map[string]interface{})
+	options["goalTypeToTrack"] = nil
+	options["shouldTrackReturningUser"] = nil
 	options["revenueValue"] = 12
-	options["customVariables"] = map[string]interface{}{"price": "€200"}
 
 	isPartOfCampaign := false
 	variationName := instance.Activate(campaignKey, userID, options)
@@ -37,7 +38,7 @@ func ABController(c *gin.Context) {
 		isPartOfCampaign = true
 	}
 
-	track := instance.Track(campaignKey, userID, abCampaigngoalIdentifier, options)
+	track := instance.Track(nil, userID, abCampaigngoalIdentifier, options)
 
 	settingsFile, err := json.Marshal(instance.SettingsFile)
 	if err != nil {
