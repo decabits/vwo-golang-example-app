@@ -28,7 +28,7 @@ func (us *UserStorageData) Get(userID, campaignKey string) schema.UserData {
 	var userDatas map[string][]schema.UserData
 
 	// Conect your database here to fetch the current data
-	// Uncomment the below part (Lines 45-57) to user JSON as data base
+	// Uncomment the below part (Lines 33-45) to user JSON as data base
 
 	// absPath, err := filepath.Abs(path)
 	// if err != nil {
@@ -63,7 +63,7 @@ func (us *UserStorageData) Set(userID, campaignKey, variationName, goalIdentifie
 	var userDatas map[string][]schema.UserData
 
 	// Conect your database here to insert the value
-	// Uncomment the below part (Lines 78-90) to user JSON as data base
+	// Uncomment the below part (Lines 68-80) to user JSON as data base
 
 	// absPath, err := filepath.Abs(path)
 	// if err != nil {
